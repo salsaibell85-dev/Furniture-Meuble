@@ -1,5 +1,7 @@
+"use client"
+
 import Image from "next/image"
-import { ArrowUpRight, ChevronRight } from "lucide-react"
+import { ArrowUpRight } from "lucide-react"
 
 const categories = [
   {
@@ -67,11 +69,16 @@ export function Categories() {
               key={cat.name}
               href={`#produk`}
               onClick={(e) => {
-                // Smooth scroll and trigger filter
-                const event = new CustomEvent("filterCategory", {
-                  detail: cat.name,
-                })
-                window.dispatchEvent(event)
+                e.preventDefault()
+                // Dispatch filter event
+                window.dispatchEvent(
+                  new CustomEvent("filterCategory", { detail: cat.name })
+                )
+                // Scroll to products section
+                const el = document.getElementById("produk")
+                if (el) {
+                  el.scrollIntoView({ behavior: "smooth" })
+                }
               }}
               className="group relative cursor-pointer overflow-hidden rounded-xl bg-card"
             >

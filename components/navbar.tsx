@@ -85,34 +85,36 @@ export function Navbar() {
                       "Rak",
                     ].map((cat) => (
                       <DropdownMenuItem key={cat} asChild>
-                        <Link
+                        <a
                           href="#produk"
-                          onClick={() => {
-                            const event = new CustomEvent("filterCategory", {
-                              detail: cat,
-                            })
-                            window.dispatchEvent(event)
+                          onClick={(e) => {
+                            e.preventDefault()
+                            window.dispatchEvent(
+                              new CustomEvent("filterCategory", { detail: cat })
+                            )
+                            document.getElementById("produk")?.scrollIntoView({ behavior: "smooth" })
                           }}
                           className="w-full cursor-pointer"
                         >
                           {cat}
-                        </Link>
+                        </a>
                       </DropdownMenuItem>
                     ))}
                     <div className="my-1 h-px bg-muted" />
                     <DropdownMenuItem asChild>
-                      <Link
+                      <a
                         href="#produk"
-                        onClick={() => {
-                          const event = new CustomEvent("filterCategory", {
-                            detail: "Semua",
-                          })
-                          window.dispatchEvent(event)
+                        onClick={(e) => {
+                          e.preventDefault()
+                          window.dispatchEvent(
+                            new CustomEvent("filterCategory", { detail: "Semua" })
+                          )
+                          document.getElementById("produk")?.scrollIntoView({ behavior: "smooth" })
                         }}
                         className="w-full cursor-pointer font-medium text-primary"
                       >
                         Lihat Semua
-                      </Link>
+                      </a>
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
