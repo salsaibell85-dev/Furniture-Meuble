@@ -2,8 +2,15 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import { Star, ShoppingBag } from "lucide-react"
+import { Star, ShoppingBag, Info, X } from "lucide-react"
 import { useState, useEffect } from "react"
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog"
 
 const products = [
   {
@@ -16,6 +23,7 @@ const products = [
     reviews: 128,
     image: "/images/prod-sofa-1.jpg",
     badge: "Best Seller",
+    description: "Sofa elegan dengan busa high-density yang tahan lama dan kain pelapis premium yang lembut di kulit. Desain ergonomis memberikan kenyamanan maksimal untuk ruang tamu Anda. Rangka kayu solid menjamin kekuatan struktural hingga bertahun-tahun penggunaan.",
   },
   {
     id: 2,
@@ -27,6 +35,7 @@ const products = [
     reviews: 95,
     image: "/images/prod-meja-1.jpg",
     badge: "Promo",
+    description: "Dibuat dari kayu jati asli pilihan dengan finishing natural yang menonjolkan keindahan serat kayu. Meja ini memiliki konstruksi kokoh dan desain minimalis yang cocok untuk berbagai gaya interior ruangan.",
   },
   {
     id: 3,
@@ -38,6 +47,7 @@ const products = [
     reviews: 73,
     image: "/images/prod-lemari-1.jpg",
     badge: null,
+    description: "Lemari pakaian luas dengan 3 pintu geser yang hemat ruang. Dilengkapi dengan gantungan baju stainless, rak yang dapat disesuaikan, dan laci penyimpanan dokumen penting dengan kunci keamanan.",
   },
   {
     id: 4,
@@ -49,6 +59,7 @@ const products = [
     reviews: 86,
     image: "/images/prod-bed-1.jpg",
     badge: "Terbaru",
+    description: "Dipan tempat tidur dengan desain scandinavian yang bersih dan modern. Struktur rangka yang stabil mencegah bunyi berderit, memastikan tidur Anda lebih nyenyak dan berkualitas.",
   },
   {
     id: 5,
@@ -60,6 +71,7 @@ const products = [
     reviews: 64,
     image: "/images/prod-dining-1.jpg",
     badge: "Promo",
+    description: "Set meja makan lengkap dengan 4 kursi bergaya modern. Permukaan meja tahan panas dan mudah dibersihkan. Kursi dilengkapi dengan bantalan empuk untuk kenyamanan saat menikmati hidangan bersama keluarga.",
   },
   {
     id: 6,
@@ -71,6 +83,7 @@ const products = [
     reviews: 112,
     image: "/images/prod-rak-1.jpg",
     badge: null,
+    description: "Rak buku serbaguna dengan 5 tingkat penyimpanan terbuka. Cocok untuk menyimpan koleksi buku, pajangan, atau dokumen kantor. Material papan berkualitas tinggi yang tahan lembab.",
   },
   {
     id: 7,
@@ -82,6 +95,7 @@ const products = [
     reviews: 58,
     image: "/images/prod-kursi-1.jpg",
     badge: "Best Seller",
+    description: "Kursi kerja dengan dukungan lumbar yang dapat disesuaikan dan sandaran mesh untuk sirkulasi udara yang baik. Membantu menjaga postur tubuh saat bekerja dalam waktu lama agar tidak cepat lelah.",
   },
   {
     id: 8,
@@ -93,6 +107,7 @@ const products = [
     reviews: 41,
     image: "/images/prod-tv-1.jpg",
     badge: "Terbaru",
+    description: "Meja TV dengan kombinasi penyimpanan terbuka dan tertutup. Memiliki lubang manajemen kabel agar instalasi perangkat hiburan Anda terlihat rapi dan terorganisir.",
   },
 ]
 
@@ -112,6 +127,7 @@ function getDiscount(original: number, current: number) {
 
 export function FeaturedProducts() {
   const [active, setActive] = useState("Semua")
+  const [selectedProduct, setSelectedProduct] = useState<any>(null)
 
   useEffect(() => {
     const handleFilter = (e: any) => {
@@ -166,7 +182,8 @@ export function FeaturedProducts() {
           {filtered.map((product) => (
             <article
               key={product.id}
-              className="group overflow-hidden rounded-xl bg-card transition-shadow hover:shadow-lg"
+              className="group cursor-pointer overflow-hidden rounded-xl bg-card transition-shadow hover:shadow-lg"
+              onClick={() => setSelectedProduct(product)}
             >
               <div className="relative aspect-square overflow-hidden">
                 <Image
@@ -180,14 +197,27 @@ export function FeaturedProducts() {
                     {product.badge}
                   </span>
                 )}
-                {/* Quick action */}
-                <Link
-                  href="https://wa.me/6289692530975"
-                  className="absolute bottom-3 right-3 flex h-10 w-10 items-center justify-center rounded-full bg-primary text-primary-foreground opacity-0 shadow-lg transition-all duration-300 group-hover:opacity-100"
-                  aria-label={`Pesan ${product.name} via WhatsApp`}
-                >
-                  <ShoppingBag className="h-5 w-5" />
-                </Link>
+                {/* Quick actions */}
+                <div className="absolute bottom-3 right-3 flex flex-col gap-2 opacity-0 transition-all duration-300 group-hover:opacity-100">
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setSelectedProduct(product);
+                    }}
+                    className="flex h-10 w-10 items-center justify-center rounded-full bg-card text-foreground shadow-lg hover:bg-accent hover:text-accent-foreground"
+                    aria-label="Detail Produk"
+                  >
+                    <Info className="h-5 w-5" />
+                  </button>
+                  <Link
+                    href={`https://wa.me/6289692530975?text=Halo%2C%20saya%20tertarik%20dengan%20${product.name}%20di%20toko%20Meubel%20Banjarmasin.%20Berapa%20harganya%3F`}
+                    className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg"
+                    aria-label={`Pesan ${product.name} via WhatsApp`}
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <ShoppingBag className="h-5 w-5" />
+                  </Link>
+                </div>
               </div>
 
               <div className="p-4">
@@ -238,6 +268,86 @@ export function FeaturedProducts() {
           </Link>
         </div>
       </div>
+
+      {/* Product Detail Modal */}
+      <Dialog open={!!selectedProduct} onOpenChange={() => setSelectedProduct(null)}>
+        <DialogContent className="max-w-3xl p-0">
+          <div className="grid grid-cols-1 md:grid-cols-2">
+            <div className="relative aspect-square md:aspect-auto">
+              {selectedProduct && (
+                <Image
+                  src={selectedProduct.image}
+                  alt={selectedProduct.name}
+                  fill
+                  className="object-cover"
+                />
+              )}
+            </div>
+            <div className="flex flex-col p-6 md:p-8">
+              <button
+                onClick={() => setSelectedProduct(null)}
+                className="absolute right-4 top-4 rounded-full bg-card p-1 text-muted-foreground transition-colors hover:text-foreground md:hidden"
+              >
+                <X className="h-5 w-5" />
+              </button>
+
+              <div className="mb-2">
+                <span className="text-xs font-bold uppercase tracking-widest text-accent">
+                  {selectedProduct?.category}
+                </span>
+                <DialogTitle className="mt-1 font-serif text-2xl font-bold text-foreground">
+                  {selectedProduct?.name}
+                </DialogTitle>
+              </div>
+
+              <div className="mb-4 flex items-center gap-1">
+                <Star className="h-4 w-4 fill-amber-400 text-amber-400" />
+                <span className="text-sm font-semibold text-foreground">
+                  {selectedProduct?.rating}
+                </span>
+                <span className="text-sm text-muted-foreground">
+                  ({selectedProduct?.reviews} ulasan pembeli)
+                </span>
+              </div>
+
+              <div className="mb-6">
+                <div className="flex items-center gap-3">
+                  <span className="text-2xl font-bold text-primary">
+                    {selectedProduct && formatPrice(selectedProduct.price)}
+                  </span>
+                  {selectedProduct?.originalPrice && (
+                    <span className="rounded bg-accent/10 px-2 py-1 text-xs font-bold text-accent">
+                      Hemat {getDiscount(selectedProduct.originalPrice, selectedProduct.price)}%
+                    </span>
+                  )}
+                </div>
+                {selectedProduct?.originalPrice && (
+                  <span className="text-sm text-muted-foreground line-through">
+                    {formatPrice(selectedProduct.originalPrice)}
+                  </span>
+                )}
+              </div>
+
+              <div className="mb-8 grow">
+                <h4 className="mb-2 text-sm font-bold text-foreground">Deskripsi Produk</h4>
+                <DialogDescription className="text-sm leading-relaxed text-muted-foreground">
+                  {selectedProduct?.description}
+                </DialogDescription>
+              </div>
+
+              <Link
+                href={`https://wa.me/6289692530975?text=Halo%2C%20saya%20tertarik%20dengan%20${selectedProduct?.name}%20di%20toko%20Meubel%20Banjarmasin.%20Apakah%20stok%20tersedia%3F`}
+                className="flex items-center justify-center gap-2 rounded-lg bg-primary py-4 text-sm font-bold text-primary-foreground transition-all hover:opacity-90"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <ShoppingBag className="h-5 w-5" />
+                Pesan Sekarang via WhatsApp
+              </Link>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </section>
   )
 }
