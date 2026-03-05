@@ -125,6 +125,26 @@ function getDiscount(original: number, current: number) {
   return Math.round(((original - current) / original) * 100)
 }
 
+function generateWhatsAppLink(product: any) {
+  const phoneNumber = "6289692530975"
+  const formattedPrice = formatPrice(product.price)
+  const message = `Halo Nova Interior Design,
+
+Saya ingin memesan produk berikut:
+
+Nama Produk: ${product.name}
+Harga Produk: ${formattedPrice}
+Jumlah Pesanan: [Isi Jumlah Barang]
+
+Data Pemesan:
+Nama: [Isi Nama Anda]
+Alamat Pengiriman: [Isi Kota/Kecamatan]
+
+Mohon informasi ketersediaan stok dan total biaya (termasuk ongkir). Terima kasih.`
+
+  return `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`
+}
+
 export function FeaturedProducts() {
   const [active, setActive] = useState("Semua")
   const [selectedProduct, setSelectedProduct] = useState<any>(null)
@@ -210,10 +230,12 @@ export function FeaturedProducts() {
                     <Info className="h-5 w-5" />
                   </button>
                   <Link
-                    href={`https://wa.me/6289692530975?text=Halo%2C%20saya%20tertarik%20dengan%20${product.name}%20di%20toko%20Meubel%20Banjarmasin.%20Berapa%20harganya%3F`}
+                    href={generateWhatsAppLink(product)}
                     className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg"
                     aria-label={`Pesan ${product.name} via WhatsApp`}
                     onClick={(e) => e.stopPropagation()}
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
                     <ShoppingBag className="h-5 w-5" />
                   </Link>
@@ -336,7 +358,7 @@ export function FeaturedProducts() {
               </div>
 
               <Link
-                href={`https://wa.me/6289692530975?text=Halo%2C%20saya%20tertarik%20dengan%20${selectedProduct?.name}%20di%20toko%20Meubel%20Banjarmasin.%20Apakah%20stok%20tersedia%3F`}
+                href={generateWhatsAppLink(selectedProduct)}
                 className="flex items-center justify-center gap-2 rounded-lg bg-primary py-4 text-sm font-bold text-primary-foreground transition-all hover:opacity-90"
                 target="_blank"
                 rel="noopener noreferrer"
