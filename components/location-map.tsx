@@ -64,10 +64,10 @@ export function LocationMap() {
               </div>
               <h3 className="font-serif text-lg font-bold text-foreground">Telepon / WhatsApp</h3>
               <Link
-                href="https://wa.me/6281256440494"
+                href="https://wa.me/6289692530975"
                 className="mt-2 block text-lg font-semibold text-primary hover:underline"
               >
-                0812-5644-0494
+                0896-9253-0975
               </Link>
               <p className="mt-1 text-sm text-muted-foreground">
                 Hubungi kami via WhatsApp untuk konsultasi dan pemesanan

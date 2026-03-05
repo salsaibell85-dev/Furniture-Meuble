@@ -39,11 +39,11 @@ export function Navbar() {
             </span>
           </div>
           <Link
-            href="https://wa.me/6281256440494"
+            href="https://wa.me/6289692530975"
             className="flex items-center gap-1 font-medium transition-opacity hover:opacity-80"
           >
             <Phone className="h-3 w-3" />
-            0812-5644-0494
+            0896-9253-0975
           </Link>
         </div>
       </div>
@@ -133,7 +133,7 @@ export function Navbar() {
           {/* CTA + mobile toggle */}
           <div className="flex items-center gap-3">
             <Link
-              href="https://wa.me/6281256440494"
+              href="https://wa.me/6289692530975"
               className="hidden rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-all hover:opacity-90 md:inline-flex"
             >
               Hubungi Kami
@@ -163,7 +163,7 @@ export function Navbar() {
                 </Link>
               ))}
               <Link
-                href="https://wa.me/6281256440494"
+                href="https://wa.me/6289692530975"
                 className="mt-2 rounded-lg bg-primary px-5 py-3 text-center text-sm font-semibold text-primary-foreground"
               >
                 Hubungi Kami via WhatsApp

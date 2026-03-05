@@ -182,7 +182,7 @@ export function FeaturedProducts() {
                 )}
                 {/* Quick action */}
                 <Link
-                  href="https://wa.me/6281256440494"
+                  href="https://wa.me/6289692530975"
                   className="absolute bottom-3 right-3 flex h-10 w-10 items-center justify-center rounded-full bg-primary text-primary-foreground opacity-0 shadow-lg transition-all duration-300 group-hover:opacity-100"
                   aria-label={`Pesan ${product.name} via WhatsApp`}
                 >
@@ -231,7 +231,7 @@ export function FeaturedProducts() {
         {/* CTA */}
         <div className="mt-12 text-center">
           <Link
-            href="https://wa.me/6281256440494"
+            href="https://wa.me/6289692530975"
             className="inline-flex items-center gap-2 rounded-lg bg-primary px-8 py-4 text-sm font-semibold text-primary-foreground transition-all hover:opacity-90"
           >
             Lihat Semua Produk via WhatsApp

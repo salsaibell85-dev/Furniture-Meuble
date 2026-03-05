@@ -14,7 +14,7 @@ export function CtaBanner() {
         </p>
         <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
           <Link
-            href="https://wa.me/6281256440494"
+            href="https://wa.me/6289692530975"
             className="group flex items-center gap-2 rounded-lg bg-primary px-8 py-4 text-sm font-semibold text-primary-foreground transition-all hover:opacity-90"
           >
             <Phone className="h-4 w-4" />
