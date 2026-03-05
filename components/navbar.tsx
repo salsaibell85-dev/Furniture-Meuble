@@ -2,7 +2,13 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { Menu, X, Phone, MapPin, Clock } from "lucide-react"
+import { Menu, X, Phone, MapPin, Clock, ChevronDown } from "lucide-react"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 const navLinks = [
   { href: "#beranda", label: "Beranda" },
@@ -62,15 +68,64 @@ export function Navbar() {
 
           {/* Desktop links */}
           <div className="hidden items-center gap-8 lg:flex">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="text-sm font-medium text-foreground/80 transition-colors hover:text-primary"
-              >
-                {link.label}
-              </Link>
-            ))}
+            {navLinks.map((link) =>
+              link.label === "Kategori" ? (
+                <DropdownMenu key={link.href}>
+                  <DropdownMenuTrigger className="flex items-center gap-1 text-sm font-medium text-foreground/80 transition-colors hover:text-primary focus:outline-none">
+                    {link.label}
+                    <ChevronDown className="h-4 w-4" />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="start" className="w-48">
+                    {[
+                      "Sofa",
+                      "Meja",
+                      "Lemari",
+                      "Kursi",
+                      "Tempat Tidur",
+                      "Rak",
+                    ].map((cat) => (
+                      <DropdownMenuItem key={cat} asChild>
+                        <Link
+                          href="#produk"
+                          onClick={() => {
+                            const event = new CustomEvent("filterCategory", {
+                              detail: cat,
+                            })
+                            window.dispatchEvent(event)
+                          }}
+                          className="w-full cursor-pointer"
+                        >
+                          {cat}
+                        </Link>
+                      </DropdownMenuItem>
+                    ))}
+                    <div className="my-1 h-px bg-muted" />
+                    <DropdownMenuItem asChild>
+                      <Link
+                        href="#produk"
+                        onClick={() => {
+                          const event = new CustomEvent("filterCategory", {
+                            detail: "Semua",
+                          })
+                          window.dispatchEvent(event)
+                        }}
+                        className="w-full cursor-pointer font-medium text-primary"
+                      >
+                        Lihat Semua
+                      </Link>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              ) : (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="text-sm font-medium text-foreground/80 transition-colors hover:text-primary"
+                >
+                  {link.label}
+                </Link>
+              )
+            )}
           </div>
 
           {/* CTA + mobile toggle */}

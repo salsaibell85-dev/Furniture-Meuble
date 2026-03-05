@@ -3,7 +3,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { Star, ShoppingBag } from "lucide-react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 const products = [
   {
@@ -113,6 +113,16 @@ function getDiscount(original: number, current: number) {
 export function FeaturedProducts() {
   const [active, setActive] = useState("Semua")
 
+  useEffect(() => {
+    const handleFilter = (e: any) => {
+      if (e.detail && filters.includes(e.detail)) {
+        setActive(e.detail)
+      }
+    }
+    window.addEventListener("filterCategory", handleFilter)
+    return () => window.removeEventListener("filterCategory", handleFilter)
+  }, [])
+
   const filtered =
     active === "Semua"
       ? products
@@ -141,11 +151,10 @@ export function FeaturedProducts() {
             <button
               key={f}
               onClick={() => setActive(f)}
-              className={`rounded-full px-5 py-2 text-sm font-medium transition-all ${
-                active === f
-                  ? "bg-primary text-primary-foreground"
-                  : "bg-card text-foreground/70 hover:bg-card hover:text-foreground"
-              }`}
+              className={`rounded-full px-5 py-2 text-sm font-medium transition-all ${active === f
+                ? "bg-primary text-primary-foreground"
+                : "bg-card text-foreground/70 hover:bg-card hover:text-foreground"
+                }`}
             >
               {f}
             </button>

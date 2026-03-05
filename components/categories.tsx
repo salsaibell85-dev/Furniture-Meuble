@@ -1,5 +1,5 @@
 import Image from "next/image"
-import { ArrowUpRight } from "lucide-react"
+import { ArrowUpRight, ChevronRight } from "lucide-react"
 
 const categories = [
   {
@@ -63,35 +63,47 @@ export function Categories() {
         {/* Grid */}
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {categories.map((cat) => (
-            <article
+            <a
               key={cat.name}
+              href={`#produk`}
+              onClick={(e) => {
+                // Smooth scroll and trigger filter
+                const event = new CustomEvent("filterCategory", {
+                  detail: cat.name,
+                })
+                window.dispatchEvent(event)
+              }}
               className="group relative cursor-pointer overflow-hidden rounded-xl bg-card"
             >
-              <div className="relative aspect-[4/3] overflow-hidden">
-                <Image
-                  src={cat.image}
-                  alt={`${cat.name} - Furniture ${cat.name} berkualitas di toko meubel Banjarmasin`}
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-foreground/70 via-foreground/20 to-transparent" />
-                {/* Info overlay */}
-                <div className="absolute inset-x-0 bottom-0 flex items-end justify-between p-5">
-                  <div>
-                    <h3 className="font-serif text-xl font-bold text-card md:text-2xl">
-                      {cat.name}
-                    </h3>
-                    <p className="mt-1 text-sm text-card/80">{cat.description}</p>
-                    <span className="mt-2 inline-block rounded-full bg-card/20 px-3 py-1 text-xs font-medium text-card backdrop-blur-sm">
-                      {cat.count}
-                    </span>
-                  </div>
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-accent text-accent-foreground opacity-0 transition-all duration-300 group-hover:opacity-100">
-                    <ArrowUpRight className="h-5 w-5" />
+              <article>
+                <div className="relative aspect-[4/3] overflow-hidden">
+                  <Image
+                    src={cat.image}
+                    alt={`${cat.name} - Furniture ${cat.name} berkualitas di toko meubel Banjarmasin`}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-foreground/70 via-foreground/20 to-transparent" />
+                  {/* Info overlay */}
+                  <div className="absolute inset-x-0 bottom-0 flex items-end justify-between p-5">
+                    <div>
+                      <h3 className="font-serif text-xl font-bold text-card md:text-2xl">
+                        {cat.name}
+                      </h3>
+                      <p className="mt-1 text-sm text-card/80">
+                        {cat.description}
+                      </p>
+                      <span className="mt-2 inline-block rounded-full bg-card/20 px-3 py-1 text-xs font-medium text-card backdrop-blur-sm">
+                        {cat.count}
+                      </span>
+                    </div>
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-accent text-accent-foreground opacity-0 transition-all duration-300 group-hover:opacity-100">
+                      <ArrowUpRight className="h-5 w-5" />
+                    </div>
                   </div>
                 </div>
-              </div>
-            </article>
+              </article>
+            </a>
           ))}
         </div>
       </div>
