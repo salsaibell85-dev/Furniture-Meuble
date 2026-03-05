@@ -22,7 +22,7 @@ export function LocationMap() {
           {/* Map */}
           <div className="overflow-hidden rounded-2xl lg:col-span-3">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3983.5!2d114.5917!3d-3.3345!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2de4209a6eda3001%3A0x5e6b1e5b7a7e5d8d!2sJl.%20Tembus%20Mantuil%2C%20Kelayan%20Sel.%2C%20Kec.%20Banjarmasin%20Sel.%2C%20Kota%20Banjarmasin%2C%20Kalimantan%20Selatan%2070112!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid"
+              src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=JHX8%2BQJX+Jl.+Tembus+Mantuil,+Kelayan+Sel.,+Kec.+Banjarmasin+Sel.,+Kota+Banjarmasin,+Kalimantan+Selatan+70112&zoom=16&language=id"
               width="100%"
               height="450"
               style={{ border: 0 }}
