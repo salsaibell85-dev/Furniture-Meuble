@@ -78,7 +78,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="id">
+    <html lang="id" suppressHydrationWarning>
       <head>
         <script
           type="application/ld+json"
@@ -126,6 +126,7 @@ export default function RootLayout({
       </head>
       <body
         className={`${plusJakarta.variable} ${playfair.variable} font-sans antialiased`}
+        suppressHydrationWarning
       >
         {children}
         <Analytics />
