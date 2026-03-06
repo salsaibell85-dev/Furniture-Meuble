@@ -47,11 +47,11 @@ export function Footer() {
             </p>
             <div className="mt-4 flex flex-col gap-2">
               <Link
-                href="https://wa.me/6281256440494"
+                href="https://wa.me/6289692530975"
                 className="flex items-center gap-2 text-sm text-background/70 hover:text-background"
               >
                 <Phone className="h-4 w-4" />
-                0812-5644-0494
+                0896-9253-0975
               </Link>
               <div className="flex items-center gap-2 text-sm text-background/70">
                 <Mail className="h-4 w-4" />
@@ -84,7 +84,7 @@ export function Footer() {
               {categories.map((cat) => (
                 <li key={cat}>
                   <Link
-                    href="https://wa.me/6281256440494"
+                    href="https://wa.me/6289692530975"
                     className="text-sm text-background/70 transition-colors hover:text-background"
                   >
                     {cat}

@@ -65,7 +65,7 @@ export function About() {
             </div>
 
             <Link
-              href="https://wa.me/6281256440494"
+              href="https://wa.me/6289692530975"
               className="mt-8 inline-flex rounded-lg bg-primary px-8 py-4 text-sm font-semibold text-primary-foreground transition-all hover:opacity-90"
             >
               Hubungi Kami Sekarang

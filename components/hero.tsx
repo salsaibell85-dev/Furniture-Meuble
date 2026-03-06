@@ -50,7 +50,7 @@ export function Hero() {
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
           </Link>
           <Link
-            href="https://wa.me/6281256440494"
+            href="https://wa.me/6289692530975"
             className="flex items-center justify-center gap-2 rounded-lg border border-card/30 px-8 py-4 text-sm font-semibold text-card backdrop-blur-sm transition-all hover:bg-card/10"
           >
             Konsultasi Gratis

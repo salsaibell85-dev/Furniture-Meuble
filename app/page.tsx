@@ -13,19 +13,14 @@ import { WhatsAppFloat } from "@/components/whatsapp-float"
 export default function Home() {
   return (
     <>
-      <Navbar />
-      <main>
-        <Hero />
-        <Categories />
-        <FeaturedProducts />
-        <WhyChooseUs />
-        <About />
-        <Testimonials />
-        <CtaBanner />
-        <LocationMap />
-      </main>
-      <Footer />
-      <WhatsAppFloat />
+      <Hero />
+      <Categories />
+      <FeaturedProducts />
+      <WhyChooseUs />
+      <About />
+      <Testimonials />
+      <CtaBanner />
+      <LocationMap />
     </>
   )
 }

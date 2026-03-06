@@ -2,6 +2,9 @@ import type { Metadata, Viewport } from 'next'
 import { Plus_Jakarta_Sans, Playfair_Display } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
+import { Navbar } from "@/components/navbar"
+import { Footer } from "@/components/footer"
+import { WhatsAppFloat } from "@/components/whatsapp-float"
 
 const plusJakarta = Plus_Jakarta_Sans({
   subsets: ['latin'],
@@ -24,7 +27,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   title: 'Meubel Banjarmasin - Toko Furniture Terbaik & Terlengkap di Banjarmasin',
   description:
-    'Toko meubel furniture Banjarmasin terbaik dan terlengkap. Jual sofa, meja, kursi, lemari, tempat tidur berkualitas dengan harga terjangkau. Buka 24 jam di Jl. Tembus Mantuil, Banjarmasin Selatan. Hubungi 0812-5644-0494.',
+    'Toko meubel furniture Banjarmasin terbaik dan terlengkap. Jual sofa, meja, kursi, lemari, tempat tidur berkualitas dengan harga terjangkau. Buka 24 jam di Jl. Tembus Mantuil, Banjarmasin Selatan. Hubungi 0896-9253-0975.',
   keywords: [
     'toko meuble furniture banjarmasin',
     'toko toko meuble banjarmasin',
@@ -90,7 +93,7 @@ export default function RootLayout({
               description:
                 'Toko meubel furniture Banjarmasin terbaik dan terlengkap. Jual sofa, meja, kursi, lemari, tempat tidur berkualitas dengan harga terjangkau.',
               url: '/',
-              telephone: '+62-812-5644-0494',
+              telephone: '+62-896-9253-0975',
               address: {
                 '@type': 'PostalAddress',
                 streetAddress: 'Jl. Tembus Mantuil, Kelayan Sel.',
@@ -127,7 +130,10 @@ export default function RootLayout({
       <body
         className={`${plusJakarta.variable} ${playfair.variable} font-sans antialiased`}
       >
-        {children}
+        <Navbar />
+        <main>{children}</main>
+        <Footer />
+        <WhatsAppFloat />
         <Analytics />
       </body>
     </html>

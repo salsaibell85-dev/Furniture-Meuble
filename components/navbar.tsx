@@ -11,12 +11,12 @@ import {
 } from "@/components/ui/dropdown-menu"
 
 const navLinks = [
-  { href: "#beranda", label: "Beranda" },
-  { href: "#kategori", label: "Kategori" },
-  { href: "#produk", label: "Produk" },
-  { href: "#tentang", label: "Tentang Kami" },
-  { href: "#testimoni", label: "Testimoni" },
-  { href: "#kontak", label: "Kontak" },
+  { href: "/", label: "Beranda" },
+  { href: "/categories", label: "Kategori" },
+  { href: "/produk", label: "Produk" },
+  { href: "/tentang", label: "Tentang Kami" },
+  { href: "/testimoni", label: "Testimoni" },
+  { href: "/kontak", label: "Kontak" },
 ]
 
 export function Navbar() {
