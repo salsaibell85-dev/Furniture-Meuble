@@ -3,7 +3,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { Star, ShoppingBag, Info, X } from "lucide-react"
-import { useState, useEffect } from "react"
+import { useState, useEffect, Suspense } from "react"
 import {
   Dialog,
   DialogContent,
@@ -145,9 +145,17 @@ Mohon informasi ketersediaan stok dan total biaya (termasuk ongkir). Terima kasi
   return `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`
 }
 
-export function FeaturedProducts() {
-  const [active, setActive] = useState("Semua")
+function FeaturedProductsContent() {
+  const searchParams = useSearchParams()
+  const initialCategory = searchParams.get("category") || "Semua"
+  const [active, setActive] = useState(initialCategory)
   const [selectedProduct, setSelectedProduct] = useState<any>(null)
+
+  useEffect(() => {
+    if (initialCategory && filters.includes(initialCategory)) {
+      setActive(initialCategory)
+    }
+  }, [initialCategory])
 
   useEffect(() => {
     const handleFilter = (e: any) => {
@@ -371,5 +379,13 @@ export function FeaturedProducts() {
         </DialogContent>
       </Dialog>
     </section>
+  )
+}
+
+export function FeaturedProducts() {
+  return (
+    <Suspense fallback={<div className="flex h-40 items-center justify-center">Memuat produk...</div>}>
+      <FeaturedProductsContent />
+    </Suspense>
   )
 }

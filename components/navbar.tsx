@@ -85,36 +85,22 @@ export function Navbar() {
                       "Rak",
                     ].map((cat) => (
                       <DropdownMenuItem key={cat} asChild>
-                        <a
-                          href="#produk"
-                          onClick={(e) => {
-                            e.preventDefault()
-                            window.dispatchEvent(
-                              new CustomEvent("filterCategory", { detail: cat })
-                            )
-                            document.getElementById("produk")?.scrollIntoView({ behavior: "smooth" })
-                          }}
+                        <Link
+                          href={`/produk?category=${cat}`}
                           className="w-full cursor-pointer"
                         >
                           {cat}
-                        </a>
+                        </Link>
                       </DropdownMenuItem>
                     ))}
                     <div className="my-1 h-px bg-muted" />
                     <DropdownMenuItem asChild>
-                      <a
-                        href="#produk"
-                        onClick={(e) => {
-                          e.preventDefault()
-                          window.dispatchEvent(
-                            new CustomEvent("filterCategory", { detail: "Semua" })
-                          )
-                          document.getElementById("produk")?.scrollIntoView({ behavior: "smooth" })
-                        }}
+                      <Link
+                        href="/produk?category=Semua"
                         className="w-full cursor-pointer font-medium text-primary"
                       >
                         Lihat Semua
-                      </a>
+                      </Link>
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>

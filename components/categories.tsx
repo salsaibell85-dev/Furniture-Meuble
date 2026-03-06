@@ -1,6 +1,7 @@
 "use client"
 
 import Image from "next/image"
+import Link from "next/link"
 import { ArrowUpRight } from "lucide-react"
 
 const categories = [
@@ -65,21 +66,9 @@ export function Categories() {
         {/* Grid */}
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {categories.map((cat) => (
-            <a
+            <Link
               key={cat.name}
-              href={`#produk`}
-              onClick={(e) => {
-                e.preventDefault()
-                // Dispatch filter event
-                window.dispatchEvent(
-                  new CustomEvent("filterCategory", { detail: cat.name })
-                )
-                // Scroll to products section
-                const el = document.getElementById("produk")
-                if (el) {
-                  el.scrollIntoView({ behavior: "smooth" })
-                }
-              }}
+              href={`/produk?category=${cat.name}`}
               className="group relative cursor-pointer overflow-hidden rounded-xl bg-card"
             >
               <article>
@@ -110,7 +99,7 @@ export function Categories() {
                   </div>
                 </div>
               </article>
-            </a>
+            </Link>
           ))}
         </div>
       </div>
