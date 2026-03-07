@@ -181,11 +181,11 @@ function FeaturedProductsContent() {
             Koleksi Terlaris
           </p>
           <h2 className="font-serif text-3xl font-bold text-foreground md:text-4xl lg:text-5xl">
-            Produk Unggulan Kami
+            Produk Pilihan Nova Interior
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
-            Temukan furniture berkualitas terbaik dengan harga terjangkau di toko meubel
-            Banjarmasin. Semua produk kami menggunakan bahan pilihan dan finishing premium.
+            Temukan furniture berkualitas premium dengan desain modern di Nova Interior design.
+            Semua produk kami dikurasi untuk memberikan kenyamanan dan keindahan maksimal.
           </p>
         </div>
 
@@ -216,7 +216,7 @@ function FeaturedProductsContent() {
               <div className="relative aspect-square overflow-hidden">
                 <Image
                   src={product.image}
-                  alt={`${product.name} - Jual ${product.category} berkualitas di toko furniture Banjarmasin`}
+                  alt={`${product.name} - Koleksi furniture premium dari Nova Interior design`}
                   fill
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
                 />

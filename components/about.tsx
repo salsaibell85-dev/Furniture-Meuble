@@ -21,7 +21,7 @@ export function About() {
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
                 src="/images/about-showroom.jpg"
-                alt="Showroom toko meubel furniture Banjarmasin terlengkap dengan koleksi furniture berkualitas"
+                alt="Showroom Nova Interior design Banjarmasin terlengkap dengan koleksi furniture berkualitas"
                 fill
                 className="object-cover"
               />
@@ -40,13 +40,13 @@ export function About() {
             </p>
             <h2 className="font-serif text-3xl font-bold text-foreground md:text-4xl">
               <span className="text-balance">
-                Toko Meubel Terpercaya di Banjarmasin Sejak 2009
+                Partner Interior & Furniture Terpercaya di Banjarmasin
               </span>
             </h2>
             <p className="mt-6 leading-relaxed text-muted-foreground">
-              Meubel Banjarmasin adalah toko furniture terlengkap dan terpercaya di Kota
-              Banjarmasin, Kalimantan Selatan. Kami menyediakan berbagai macam furniture
-              berkualitas tinggi untuk rumah, kantor, dan kebutuhan komersial Anda.
+              Nova Interior design adalah pusat furniture dan desain interior terpercaya di Kota
+              Banjarmasin, Kalimantan Selatan. Kami menghadirkan solusi estetika dan fungsional
+              untuk rumah, kantor, dan ruang komersial Anda.
             </p>
             <p className="mt-4 leading-relaxed text-muted-foreground">
               Dengan pengalaman lebih dari 15 tahun, kami berkomitmen memberikan produk

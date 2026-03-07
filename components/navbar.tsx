@@ -54,14 +54,14 @@ export function Navbar() {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
             <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
-              <span className="font-serif text-lg font-bold text-primary-foreground">M</span>
+              <span className="font-serif text-lg font-bold text-primary-foreground">N</span>
             </div>
             <div className="flex flex-col">
               <span className="font-serif text-xl font-bold leading-tight text-foreground">
-                Meubel
+                Nova Interior
               </span>
               <span className="text-[10px] font-medium uppercase tracking-widest text-muted-foreground">
-                Banjarmasin
+                Design
               </span>
             </div>
           </Link>

@@ -25,14 +25,15 @@ export const viewport: Viewport = {
 }
 
 export const metadata: Metadata = {
-  title: 'Meubel Banjarmasin - Toko Furniture Terbaik & Terlengkap di Banjarmasin',
+  title: 'Nova Interior design - Toko Furniture & Desain Interior Terbaik di Banjarmasin',
   description:
-    'Toko meubel furniture Banjarmasin terbaik dan terlengkap. Jual sofa, meja, kursi, lemari, tempat tidur berkualitas dengan harga terjangkau. Buka 24 jam di Jl. Tembus Mantuil, Banjarmasin Selatan. Hubungi 0896-9253-0975.',
+    'Nova Interior design adalah toko mebel furniture dan jasa desain interior terbaik di Banjarmasin. Jual sofa, meja, kursi, lemari, tempat tidur berkualitas premium dengan harga terjangkau. Melayani konsultasi desain interior.',
   keywords: [
-    'toko meuble furniture banjarmasin',
-    'toko toko meuble banjarmasin',
+    'nova interior design',
+    'nova interior banjarmasin',
     'toko furniture banjarmasin',
-    'toko meuble terbaik banjarmasin',
+    'desain interior banjarmasin',
+    'toko meubel terbaik banjarmasin',
     'meubel banjarmasin',
     'furniture banjarmasin',
     'furniture murah banjarmasin',
@@ -48,16 +49,16 @@ export const metadata: Metadata = {
     'furniture minimalis banjarmasin',
     'furniture modern banjarmasin',
   ],
-  authors: [{ name: 'Meubel Banjarmasin' }],
-  creator: 'Meubel Banjarmasin',
-  publisher: 'Meubel Banjarmasin',
+  authors: [{ name: 'Nova Interior design' }],
+  creator: 'Nova Interior design',
+  publisher: 'Nova Interior design',
   openGraph: {
-    title: 'Meubel Banjarmasin - Toko Furniture Terbaik & Terlengkap',
+    title: 'Nova Interior design - Toko Furniture & Desain Interior Terbaik',
     description:
-      'Toko meubel furniture Banjarmasin terbaik dan terlengkap. Jual sofa, meja, kursi, lemari, tempat tidur berkualitas dengan harga terjangkau.',
+      'Nova Interior design adalah toko furniture dan jasa desain interior terbaik di Banjarmasin. Sedia sofa, meja, kursi, lemari, tempat tidur berkualitas.',
     locale: 'id_ID',
     type: 'website',
-    siteName: 'Meubel Banjarmasin',
+    siteName: 'Nova Interior design',
   },
   robots: {
     index: true,
@@ -89,9 +90,9 @@ export default function RootLayout({
             __html: JSON.stringify({
               '@context': 'https://schema.org',
               '@type': 'FurnitureStore',
-              name: 'Meubel Banjarmasin',
+              name: 'Nova Interior design',
               description:
-                'Toko meubel furniture Banjarmasin terbaik dan terlengkap. Jual sofa, meja, kursi, lemari, tempat tidur berkualitas dengan harga terjangkau.',
+                'Nova Interior design adalah toko furniture dan jasa desain interior terbaik di Banjarmasin. Jual sofa, meja, kursi, lemari, tempat tidur berkualitas premium.',
               url: '/',
               telephone: '+62-896-9253-0975',
               address: {

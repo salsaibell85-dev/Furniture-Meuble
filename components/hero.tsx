@@ -9,7 +9,7 @@ export function Hero() {
       <div className="absolute inset-0 z-0">
         <Image
           src="/images/hero-living-room.jpg"
-          alt="Interior ruang tamu modern dengan furniture berkualitas di toko meubel furniture Banjarmasin"
+          alt="Interior ruang tamu modern dengan furniture berkualitas dari Nova Interior design Banjarmasin"
           fill
           className="object-cover"
           priority
@@ -26,7 +26,7 @@ export function Hero() {
             ))}
           </div>
           <span className="text-sm font-medium text-card">
-            Toko Meubel Terbaik Banjarmasin
+            Inspirasi Interior & Furniture Terbaik
           </span>
         </div>
 
@@ -37,8 +37,8 @@ export function Hero() {
         </h1>
 
         <p className="mt-6 max-w-xl text-base leading-relaxed text-card/80 md:text-lg">
-          Toko meubel furniture Banjarmasin terlengkap dengan koleksi sofa, meja, lemari,
-          kursi, dan tempat tidur berkualitas tinggi. Harga terjangkau, kualitas premium.
+          Nova Interior design menyediakan koleksi furniture premium dan jasa desain interior
+          terbaik. Ciptakan ruang impian Anda dengan sentuhan profesional kami.
         </p>
 
         <div className="mt-8 flex flex-col gap-4 sm:flex-row">
