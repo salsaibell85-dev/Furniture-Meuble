@@ -4,7 +4,6 @@ import Image from "next/image"
 import Link from "next/link"
 import { Star, ShoppingBag, Info, X } from "lucide-react"
 import { useState, useEffect, Suspense } from "react"
-import { useSearchParams } from "next/navigation"
 import {
   Dialog,
   DialogContent,
