@@ -127,6 +127,8 @@ function getDiscount(original: number, current: number) {
 }
 
 function generateWhatsAppLink(product: any) {
+  if (!product) return "https://wa.me/6289692530975"
+
   const phoneNumber = "6289692530975"
   const formattedPrice = formatPrice(product.price)
   const message = `Halo Nova Interior Design,
