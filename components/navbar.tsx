@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { Menu, X, Phone, MapPin, Clock, ChevronDown } from "lucide-react"
+import { Menu, X, Phone, MapPin, Clock, ChevronDown, Instagram } from "lucide-react"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -38,13 +38,25 @@ export function Navbar() {
               <span>Buka 24 Jam</span>
             </span>
           </div>
-          <Link
-            href="https://wa.me/6289692530975"
-            className="flex items-center gap-1 font-medium transition-opacity hover:opacity-80"
-          >
-            <Phone className="h-3 w-3" />
-            0896-9253-0975
-          </Link>
+          <div className="flex items-center gap-4">
+            <Link
+              href="https://www.instagram.com/novainterior?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1 font-medium transition-opacity hover:opacity-80"
+              aria-label="Instagram"
+            >
+              <Instagram className="h-3 w-3" />
+              <span className="hidden lg:inline">@novainterior</span>
+            </Link>
+            <Link
+              href="https://wa.me/6289692530975"
+              className="flex items-center gap-1 font-medium transition-opacity hover:opacity-80"
+            >
+              <Phone className="h-3 w-3" />
+              0896-9253-0975
+            </Link>
+          </div>
         </div>
       </div>
 

@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { Phone, MapPin, Clock, Mail } from "lucide-react"
+import { Phone, MapPin, Clock, Mail, Instagram } from "lucide-react"
 
 const categories = [
   "Sofa",
@@ -53,10 +53,15 @@ export function Footer() {
                 <Phone className="h-4 w-4" />
                 0896-9253-0975
               </Link>
-              <div className="flex items-center gap-2 text-sm text-background/70">
-                <Mail className="h-4 w-4" />
-                info@novainteriordesign.com
-              </div>
+              <Link
+                href="https://www.instagram.com/novainterior?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-sm text-background/70 hover:text-background"
+              >
+                <Instagram className="h-4 w-4" />
+                @novainterior
+              </Link>
             </div>
           </div>
 
