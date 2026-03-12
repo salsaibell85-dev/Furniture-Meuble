@@ -1,22 +1,42 @@
 "use client"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import Link from "next/link"
 import Image from "next/image"
-import { Eye, EyeOff, Lock, User, ArrowLeft } from "lucide-react"
+import { Eye, EyeOff, Lock, User, ArrowLeft, AlertCircle } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
+import { supabase } from "@/lib/supabase"
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [error, setError] = useState<string | null>(null)
+  const router = useRouter()
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setIsLoading(true)
-    // TODO: Implement actual admin authentication logic
-    setTimeout(() => setIsLoading(false), 1500)
+    setError(null)
+    
+    try {
+      const { error: authError } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      })
+
+      if (authError) throw authError
+
+      router.push("/admin/dashboard")
+    } catch (err: any) {
+      setError(err.message || "Email atau Password salah")
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -66,21 +86,29 @@ export default function LoginPage() {
           </div>
 
           {/* Form */}
-          <form onSubmit={handleSubmit} className="space-y-5 px-8 pb-8 pt-6">
+          <form onSubmit={handleSubmit} className="p-8 pt-6 space-y-5">
+            {error && (
+              <div className="flex items-center gap-3 rounded-xl bg-red-500/10 p-4 text-sm text-red-100 animate-in slide-in-from-top-2">
+                <AlertCircle className="h-5 w-5 shrink-0 text-red-400" />
+                <p>{error}</p>
+              </div>
+            )}
             {/* Username */}
             <div className="space-y-2">
-              <Label htmlFor="username" className="text-sm font-medium text-card/80">
-                Username
+              <Label htmlFor="email" className="text-sm font-medium text-card/80">
+                Email
               </Label>
               <div className="relative">
                 <User className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-card/40" />
                 <Input
-                  id="username"
-                  name="username"
-                  type="text"
-                  placeholder="Masukkan username"
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder="admin@example.com"
                   required
-                  autoComplete="username"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  autoComplete="email"
                   className="h-11 border-card/15 bg-card/5 pl-10 text-card placeholder:text-card/30 focus-visible:border-accent focus-visible:ring-accent/30"
                 />
               </div>
@@ -99,6 +127,8 @@ export default function LoginPage() {
                   type={showPassword ? "text" : "password"}
                   placeholder="Masukkan password"
                   required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   autoComplete="current-password"
                   className="h-11 border-card/15 bg-card/5 pl-10 pr-11 text-card placeholder:text-card/30 focus-visible:border-accent focus-visible:ring-accent/30"
                 />
