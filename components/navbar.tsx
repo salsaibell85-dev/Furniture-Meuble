@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { Menu, X, Phone, MapPin, Clock, ChevronDown, Instagram } from "lucide-react"
+import { Menu, X, Phone, MapPin, Clock, ChevronDown, Instagram, UserCircle } from "lucide-react"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -130,6 +130,14 @@ export function Navbar() {
 
           {/* CTA + mobile toggle */}
           <div className="flex items-center gap-3">
+            <Link
+              href="/login"
+              className="rounded-lg p-2 text-foreground/70 transition-colors hover:bg-secondary hover:text-primary"
+              aria-label="Login Admin"
+              title="Login Admin"
+            >
+              <UserCircle className="h-5 w-5" />
+            </Link>
             <Link
               href="https://wa.me/6289692530975"
               className="hidden rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-all hover:opacity-90 md:inline-flex"
