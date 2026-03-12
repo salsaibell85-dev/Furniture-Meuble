@@ -46,16 +46,57 @@ export default function ContactPage() {
                             </div>
                         </div>
 
-                        <form className="mt-12 space-y-4 rounded-2xl bg-secondary p-8">
-                            <h3 className="mb-4 font-serif text-2xl font-bold">Kirim Pesan</h3>
-                            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                                <input type="text" placeholder="Nama Lengkap" className="rounded-lg border border-border bg-background p-3 outline-none focus:ring-2 focus:ring-primary" />
-                                <input type="email" placeholder="Email" className="rounded-lg border border-border bg-background p-3 outline-none focus:ring-2 focus:ring-primary" />
+                        {/* Social Media & Direct Help */}
+                        <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2">
+                            <a 
+                                href="https://instagram.com/novainteriordesign" 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="group flex items-center gap-4 rounded-2xl bg-card p-6 border border-border transition-all hover:shadow-lg hover:border-accent/30"
+                            >
+                                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-gradient-to-tr from-amber-400 via-rose-500 to-purple-600 text-white">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+                                </div>
+                                <div>
+                                    <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Instagram</p>
+                                    <p className="text-sm font-semibold group-hover:text-primary transition-colors">@novainteriordesign</p>
+                                </div>
+                            </a>
+
+                            <a 
+                                href="https://wa.me/6289692530975" 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="group flex items-center gap-4 rounded-2xl bg-primary p-6 text-primary-foreground transition-all hover:shadow-xl hover:scale-[1.02]"
+                            >
+                                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white/20">
+                                    <Phone className="h-6 w-6" />
+                                </div>
+                                <div>
+                                    <p className="text-xs font-bold uppercase tracking-wider opacity-80">WhatsApp Direct</p>
+                                    <p className="text-sm font-bold">Chat Sekarang</p>
+                                </div>
+                            </a>
+                        </div>
+
+                        {/* Service Promise */}
+                        <div className="mt-8 rounded-2xl bg-[#f5f1e9] p-8 border border-[#e8dfcf]">
+                            <h3 className="mb-4 font-serif text-xl font-bold text-[#352014]">Komitmen Layanan</h3>
+                            <div className="grid grid-cols-1 gap-4 text-sm text-[#5a3f32]">
+                                <div className="flex items-center gap-3">
+                                    <div className="h-2 w-2 rounded-full bg-accent" />
+                                    <span>Respon cepat dalam hitungan menit</span>
+                                </div>
+                                <div className="flex items-center gap-3">
+                                    <div className="h-2 w-2 rounded-full bg-accent" />
+                                    <span>Konsultasi desain interior gratis</span>
+                                </div>
+                                <div className="flex items-center gap-3">
+                                    <div className="h-2 w-2 rounded-full bg-accent" />
+                                    <span>Survey lokasi di seluruh area Banjarmasin</span>
+                                </div>
                             </div>
-                            <input type="text" placeholder="Subjek" className="w-full rounded-lg border border-border bg-background p-3 outline-none focus:ring-2 focus:ring-primary" />
-                            <textarea placeholder="Pesan Anda" rows={4} className="w-full rounded-lg border border-border bg-background p-3 outline-none focus:ring-2 focus:ring-primary" />
-                            <button className="w-full rounded-lg bg-primary py-4 font-bold text-primary-foreground transition-opacity hover:opacity-90">Kirim Pesan Sekarang</button>
-                        </form>
+                        </div>
                     </div>
 
                     <div className="flex flex-col">
