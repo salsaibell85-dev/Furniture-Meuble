@@ -5,6 +5,7 @@ import Link from "next/link"
 import { Star, ShoppingBag, Info, X } from "lucide-react"
 import { useState, useEffect, Suspense } from "react"
 import { useSearchParams } from "next/navigation"
+import { supabase } from "@/lib/supabase"
 import {
   Dialog,
   DialogContent,
@@ -294,10 +295,32 @@ function FeaturedProductsContent() {
     return () => window.removeEventListener("filterCategory", handleFilter)
   }, [])
 
+  const [dbProducts, setDbProducts] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    async function fetchProducts() {
+      try {
+        const { data, error } = await supabase.from('products').select('*').order('id', { ascending: true })
+        if (error) throw error
+        if (data && data.length > 0) {
+          setDbProducts(data)
+        }
+      } catch (err) {
+        console.error('Error fetching products from Supabase:', err)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchProducts()
+  }, [])
+
+  const allProductsList = dbProducts.length > 0 ? dbProducts : products
+
   const filtered =
     active === "Semua"
-      ? products
-      : products.filter((p) => p.category === active)
+      ? allProductsList
+      : allProductsList.filter((p) => p.category === active)
 
   return (
     <section id="produk" className="bg-secondary py-20 md:py-28">
