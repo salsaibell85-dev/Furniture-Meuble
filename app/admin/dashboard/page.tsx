@@ -8,6 +8,7 @@ import { LayoutDashboard, LogOut, Package, Users, Settings, Loader2 } from "luci
 export default function AdminDashboardPage() {
   const [user, setUser] = useState<any>(null)
   const [loading, setLoading] = useState(true)
+  const [activeTab, setActiveTab] = useState("dashboard")
   const router = useRouter()
 
   useEffect(() => {
@@ -52,22 +53,42 @@ export default function AdminDashboardPage() {
           </div>
 
           <nav className="flex-1 space-y-2">
-            <a href="#" className="flex items-center gap-3 rounded-xl bg-primary/10 px-4 py-3 font-bold text-primary transition-all">
+            <button 
+              onClick={() => setActiveTab("dashboard")}
+              className={`flex w-full items-center gap-3 rounded-xl px-4 py-3 font-bold transition-all ${
+                activeTab === "dashboard" ? "bg-primary/10 text-primary" : "text-muted-foreground/80 hover:bg-muted/50 hover:text-foreground"
+              }`}
+            >
               <LayoutDashboard className="h-5 w-5" />
               <span>Dashboard</span>
-            </a>
-            <a href="#" className="flex items-center gap-3 rounded-xl px-4 py-3 font-medium text-muted-foreground/80 hover:bg-muted/50 hover:text-foreground transition-all">
+            </button>
+            <button 
+              onClick={() => setActiveTab("produk")}
+              className={`flex w-full items-center gap-3 rounded-xl px-4 py-3 font-bold transition-all ${
+                activeTab === "produk" ? "bg-primary/10 text-primary" : "text-muted-foreground/80 hover:bg-muted/50 hover:text-foreground"
+              }`}
+            >
               <Package className="h-5 w-5" />
               <span>Kelola Produk</span>
-            </a>
-            <a href="#" className="flex items-center gap-3 rounded-xl px-4 py-3 font-medium text-muted-foreground/80 hover:bg-muted/50 hover:text-foreground transition-all">
+            </button>
+            <button 
+              onClick={() => setActiveTab("pelanggan")}
+              className={`flex w-full items-center gap-3 rounded-xl px-4 py-3 font-bold transition-all ${
+                activeTab === "pelanggan" ? "bg-primary/10 text-primary" : "text-muted-foreground/80 hover:bg-muted/50 hover:text-foreground"
+              }`}
+            >
               <Users className="h-5 w-5" />
               <span>Pelanggan</span>
-            </a>
-            <a href="#" className="flex items-center gap-3 rounded-xl px-4 py-3 font-medium text-muted-foreground/80 hover:bg-muted/50 hover:text-foreground transition-all">
+            </button>
+            <button 
+              onClick={() => setActiveTab("pengaturan")}
+              className={`flex w-full items-center gap-3 rounded-xl px-4 py-3 font-bold transition-all ${
+                activeTab === "pengaturan" ? "bg-primary/10 text-primary" : "text-muted-foreground/80 hover:bg-muted/50 hover:text-foreground"
+              }`}
+            >
               <Settings className="h-5 w-5" />
               <span>Pengaturan</span>
-            </a>
+            </button>
           </nav>
 
           <div className="mt-auto pt-6 border-t border-[#f0ebe3]">
@@ -111,39 +132,82 @@ export default function AdminDashboardPage() {
           </div>
         </header>
 
-        {/* Stats Grid */}
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          <div className="group rounded-3xl bg-white p-8 border border-[#e8dfcf] shadow-sm transition-all hover:shadow-md hover:border-[#6d4c3d]/20">
-            <p className="text-xs font-bold uppercase tracking-widest text-[#6d4c3d]/60 mb-2">Total Produk</p>
-            <h3 className="text-4xl font-bold text-[#352014]">16</h3>
-            <div className="mt-4 flex items-center gap-2 text-xs font-bold text-green-600">
-              <span className="rounded-full bg-green-50 px-2 py-1">+2 Bulan ini</span>
+        {activeTab === "dashboard" && (
+          <>
+            {/* Stats Grid */}
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="group rounded-3xl bg-white p-8 border border-[#e8dfcf] shadow-sm transition-all hover:shadow-md hover:border-[#6d4c3d]/20">
+                <p className="text-xs font-bold uppercase tracking-widest text-[#6d4c3d]/60 mb-2">Total Produk</p>
+                <h3 className="text-4xl font-bold text-[#352014]">16</h3>
+                <div className="mt-4 flex items-center gap-2 text-xs font-bold text-green-600">
+                  <span className="rounded-full bg-green-50 px-2 py-1">+2 Bulan ini</span>
+                </div>
+              </div>
+              <div className="group rounded-3xl bg-white p-8 border border-[#e8dfcf] shadow-sm transition-all hover:shadow-md hover:border-[#6d4c3d]/20">
+                <p className="text-xs font-bold uppercase tracking-widest text-[#6d4c3d]/60 mb-2">Pesan Masuk</p>
+                <h3 className="text-4xl font-bold text-[#352014]">24</h3>
+                <div className="mt-4 flex items-center gap-2 text-xs font-bold text-accent">
+                  <span className="rounded-full bg-accent/5 px-2 py-1">Pending: 5</span>
+                </div>
+              </div>
+              <div className="group rounded-3xl bg-white p-8 border border-[#e8dfcf] shadow-sm transition-all hover:shadow-md hover:border-[#6d4c3d]/20">
+                <p className="text-xs font-bold uppercase tracking-widest text-[#6d4c3d]/60 mb-2">Sistem</p>
+                <h3 className="text-4xl font-bold text-[#352014]">Active</h3>
+                <p className="mt-4 text-xs font-bold text-muted-foreground/60 italic">Supabase Auth Connected</p>
+              </div>
             </div>
-          </div>
-          <div className="group rounded-3xl bg-white p-8 border border-[#e8dfcf] shadow-sm transition-all hover:shadow-md hover:border-[#6d4c3d]/20">
-            <p className="text-xs font-bold uppercase tracking-widest text-[#6d4c3d]/60 mb-2">Pesan Masuk</p>
-            <h3 className="text-4xl font-bold text-[#352014]">24</h3>
-            <div className="mt-4 flex items-center gap-2 text-xs font-bold text-accent">
-              <span className="rounded-full bg-accent/5 px-2 py-1">Pending: 5</span>
-            </div>
-          </div>
-          <div className="group rounded-3xl bg-white p-8 border border-[#e8dfcf] shadow-sm transition-all hover:shadow-md hover:border-[#6d4c3d]/20">
-            <p className="text-xs font-bold uppercase tracking-widest text-[#6d4c3d]/60 mb-2">Sistem</p>
-            <h3 className="text-4xl font-bold text-[#352014]">Active</h3>
-            <p className="mt-4 text-xs font-bold text-muted-foreground/60 italic">Supabase Auth Connected</p>
-          </div>
-        </div>
 
-        {/* Content Placeholder */}
-        <div className="mt-10 rounded-3xl border border-dashed border-[#e8dfcf] bg-white/40 p-20 text-center">
-            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-muted/20 text-muted-foreground/30">
+            {/* Quick Actions / Recent Activity Placeholder */}
+            <div className="mt-10 rounded-3xl border border-dashed border-[#e8dfcf] bg-white/40 p-20 text-center">
+                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-muted/20 text-muted-foreground/30">
+                    <LayoutDashboard className="h-10 w-10" />
+                </div>
+                <h3 className="text-lg font-bold text-[#352014]">Ringkasan Aktivitas</h3>
+                <p className="mx-auto mt-2 max-w-sm text-sm text-muted-foreground leading-relaxed">
+                    Statistik mendalam dan grafik aktivitas terbaru akan muncul di sini seiring bertambahnya data Anda.
+                </p>
+            </div>
+          </>
+        )}
+
+        {activeTab === "produk" && (
+          <div className="rounded-3xl border border-dashed border-[#e8dfcf] bg-white/40 p-20 text-center animate-in fade-in zoom-in-95 duration-500">
+            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 text-primary">
                 <Package className="h-10 w-10" />
             </div>
             <h3 className="text-lg font-bold text-[#352014]">Panel Pengelolaan Produk</h3>
             <p className="mx-auto mt-2 max-w-sm text-sm text-muted-foreground leading-relaxed">
                 Fitur pengelolaan produk secara visual sedang disiapkan. Anda dapat mengontrol data melalui dashboard Supabase untuk saat ini.
             </p>
-        </div>
+            <button className="mt-6 rounded-xl bg-primary px-6 py-3 text-sm font-bold text-white shadow-lg transition-transform hover:scale-105 active:scale-95">
+              Tambah Produk Baru
+            </button>
+          </div>
+        )}
+
+        {activeTab === "pelanggan" && (
+          <div className="rounded-3xl border border-dashed border-[#e8dfcf] bg-white/40 p-20 text-center animate-in fade-in zoom-in-95 duration-500">
+            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-accent/10 text-accent">
+                <Users className="h-10 w-10" />
+            </div>
+            <h3 className="text-lg font-bold text-[#352014]">Database Pelanggan</h3>
+            <p className="mx-auto mt-2 max-w-sm text-sm text-muted-foreground leading-relaxed">
+                Daftar pelanggan yang telah menghubungi atau membeli produk Anda akan ditampilkan di sini.
+            </p>
+          </div>
+        )}
+
+        {activeTab === "pengaturan" && (
+          <div className="rounded-3xl border border-dashed border-[#e8dfcf] bg-white/40 p-20 text-center animate-in fade-in zoom-in-95 duration-500">
+            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-muted/20 text-muted-foreground/30">
+                <Settings className="h-10 w-10" />
+            </div>
+            <h3 className="text-lg font-bold text-[#352014]">Pengaturan Sistem</h3>
+            <p className="mx-auto mt-2 max-w-sm text-sm text-muted-foreground leading-relaxed">
+                Konfigurasi website, profil admin, dan preferensi notifikasi dapat diatur di sini.
+            </p>
+          </div>
+        )}
       </main>
     </div>
   )
