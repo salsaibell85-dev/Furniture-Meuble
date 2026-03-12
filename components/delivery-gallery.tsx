@@ -1,6 +1,8 @@
 "use client"
 
 import Image from "next/image"
+import { useState } from "react"
+import { Truck } from "lucide-react"
 
 const deliveryImages = [
   {
@@ -36,6 +38,12 @@ const deliveryImages = [
 ]
 
 export function DeliveryGallery() {
+  const [errors, setErrors] = useState<Record<number, boolean>>({})
+
+  const handleImageError = (index: number) => {
+    setErrors(prev => ({ ...prev, [index]: true }))
+  }
+
   return (
     <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {deliveryImages.map((image, index) => (
@@ -44,16 +52,28 @@ export function DeliveryGallery() {
           className="group relative overflow-hidden rounded-2xl bg-muted border border-border"
         >
           <div className="aspect-[4/3] w-full relative overflow-hidden">
-            <Image
-              src={image.src}
-              alt={image.alt}
-              fill
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              className="object-cover transition-all duration-700 group-hover:scale-110"
-            />
-            {/* Fallback info if image is still loading or broken */}
+            {!errors[index] ? (
+              <Image
+                src={image.src}
+                alt={image.alt}
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                className="object-cover transition-all duration-700 group-hover:scale-110"
+                onError={() => handleImageError(index)}
+              />
+            ) : (
+              <div className="flex h-full w-full items-center justify-center bg-muted p-4 text-center">
+                <div className="flex flex-col items-center gap-2">
+                  <Truck className="h-10 w-10 text-muted-foreground/30" />
+                  <span className="text-[10px] font-medium text-muted-foreground/60 uppercase tracking-tighter">
+                    Dokumentasi Pengiriman
+                  </span>
+                </div>
+              </div>
+            )}
+            
             <div className="absolute inset-0 flex items-center justify-center bg-muted -z-10">
-              <span className="text-xs text-muted-foreground">Loading image...</span>
+              <span className="text-xs text-muted-foreground">Loading...</span>
             </div>
           </div>
           

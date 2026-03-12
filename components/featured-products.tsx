@@ -22,7 +22,7 @@ const products = [
     originalPrice: 6299000,
     rating: 4.9,
     reviews: 128,
-    image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&q=80&w=800",
+    image: "/images/prod-sofa-1.jpg",
     badge: "Best Seller",
     description: "Sofa elegan dengan busa high-density yang tahan lama dan kain pelapis premium yang lembut di kulit. Desain ergonomis memberikan kenyamanan maksimal untuk ruang tamu Anda. Rangka kayu solid menjamin kekuatan struktural hingga bertahun-tahun penggunaan.",
   },
@@ -34,7 +34,7 @@ const products = [
     originalPrice: 1899000,
     rating: 4.8,
     reviews: 95,
-    image: "https://images.unsplash.com/photo-1533090161767-e6ffed986c88?auto=format&fit=crop&q=80&w=800",
+    image: "/images/prod-meja-1.jpg",
     badge: "Promo",
     description: "Dibuat dari kayu jati asli pilihan dengan finishing natural yang menonjolkan keindahan serat kayu. Meja ini memiliki konstruksi kokoh dan desain minimalis yang cocok untuk berbagai gaya interior ruangan.",
   },
@@ -46,7 +46,7 @@ const products = [
     originalPrice: 5199000,
     rating: 4.9,
     reviews: 73,
-    image: "https://images.unsplash.com/photo-1595428774223-ef52624120d2?auto=format&fit=crop&q=80&w=800",
+    image: "/images/prod-lemari-1.jpg",
     badge: null,
     description: "Lemari pakaian luas dengan 3 pintu geser yang hemat ruang. Dilengkapi dengan gantungan baju stainless, rak yang dapat disesuaikan, dan laci penyimpanan dokumen penting dengan kunci keamanan.",
   },
@@ -58,7 +58,7 @@ const products = [
     originalPrice: 4599000,
     rating: 4.7,
     reviews: 86,
-    image: "https://images.unsplash.com/photo-1505691938895-1758d7eaa511?auto=format&fit=crop&q=80&w=800",
+    image: "/images/prod-bed-1.jpg",
     badge: "Terbaru",
     description: "Dipan tempat tidur dengan desain scandinavian yang bersih dan modern. Struktur rangka yang stabil mencegah bunyi berderit, memastikan tidur Anda lebih nyenyak dan berkualitas.",
   },
@@ -70,7 +70,7 @@ const products = [
     originalPrice: 7299000,
     rating: 4.9,
     reviews: 64,
-    image: "https://images.unsplash.com/photo-1617806118233-18e16208a50a?auto=format&fit=crop&q=80&w=800",
+    image: "/images/prod-dining-1.jpg",
     badge: "Promo",
     description: "Set meja makan lengkap dengan 4 kursi bergaya modern. Permukaan meja tahan panas dan mudah dibersihkan. Kursi dilengkapi dengan bantalan empuk untuk kenyamanan saat menikmati hidangan bersama keluarga.",
   },
@@ -82,7 +82,7 @@ const products = [
     originalPrice: 1299000,
     rating: 4.8,
     reviews: 112,
-    image: "https://images.unsplash.com/photo-1594620302200-9a762244a156?auto=format&fit=crop&q=80&w=800",
+    image: "/images/prod-rak-1.jpg",
     badge: null,
     description: "Rak buku serbaguna dengan 5 tingkat penyimpanan terbuka. Cocok untuk menyimpan koleksi buku, pajangan, atau dokumen kantor. Material papan berkualitas tinggi yang tahan lembab.",
   },
@@ -94,7 +94,7 @@ const products = [
     originalPrice: 2499000,
     rating: 4.7,
     reviews: 58,
-    image: "https://images.unsplash.com/photo-1580480055273-228ff5388ef8?auto=format&fit=crop&q=80&w=800",
+    image: "/images/prod-kursi-1.jpg",
     badge: "Best Seller",
     description: "Kursi kerja dengan dukungan lumbar yang dapat disesuaikan dan sandaran mesh untuk sirkulasi udara yang baik. Membantu menjaga postur tubuh saat bekerja dalam waktu lama agar tidak cepat lelah.",
   },
@@ -106,7 +106,7 @@ const products = [
     originalPrice: 2199000,
     rating: 4.8,
     reviews: 41,
-    image: "https://images.unsplash.com/photo-1593085512500-5d55148d6f0d?auto=format&fit=crop&q=80&w=800",
+    image: "/images/prod-tv-1.jpg",
     badge: "Terbaru",
     description: "Meja TV dengan kombinasi penyimpanan terbuka dan tertutup. Memiliki lubang manajemen kabel agar instalasi perangkat hiburan Anda terlihat rapi dan terorganisir.",
   },
@@ -142,7 +142,7 @@ const products = [
     originalPrice: 5599000,
     rating: 4.9,
     reviews: 28,
-    image: "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?auto=format&fit=crop&q=80&w=800",
+    image: "https://images.unsplash.com/photo-1594620302200-9a762244a156?auto=format&fit=crop&q=80&w=800",
     badge: "Premium Wood",
     description: "Rak buku bergaya klasik yang terbuat dari kayu mahoni berkualitas tinggi. Finishing gelap yang memberikan kesan mewah dan abadi untuk perpustakaan pribadi Anda.",
   },
@@ -178,7 +178,7 @@ const products = [
     originalPrice: 1699000,
     rating: 4.7,
     reviews: 39,
-    image: "https://images.unsplash.com/photo-1594620302200-9a762244a156?auto=format&fit=crop&q=80&w=800",
+    image: "https://images.unsplash.com/photo-1616486029423-aaa4789e8c9a?auto=format&fit=crop&q=80&w=800",
     badge: "Promotion",
     description: "Rak serbaguna yang cocok untuk diletakkan di ruang tamu atau koridor. Desain rampingnya tidak memakan banyak tempat namun memberikan ruang display yang cukup.",
   },
@@ -190,7 +190,7 @@ const products = [
     originalPrice: 3899000,
     rating: 4.8,
     reviews: 25,
-    image: "https://images.unsplash.com/photo-1616486029423-aaa4789e8c9a?auto=format&fit=crop&q=80&w=800",
+    image: "https://images.unsplash.com/photo-1544450186-39a7ccc3c73c?auto=format&fit=crop&q=80&w=800",
     badge: "Top Seller",
     description: "Meja rias dengan cermin besar dan pencahayaan terintegrasi. Dilengkapi banyak laci untuk menyimpan koleksi kosmetik Anda secara rapi dan terorganisir.",
   },
@@ -242,6 +242,34 @@ Alamat Pengiriman: [Isi Kota/Kecamatan]
 Mohon informasi ketersediaan stok dan total biaya (termasuk ongkir). Terima kasih.`
 
   return `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`
+}
+
+// Helper component for handling image load errors
+const ProductImage = ({ src, alt, className }: { src: string; alt: string; className?: string }) => {
+  const [error, setError] = useState(false)
+  
+  return (
+    <div className="relative h-full w-full bg-muted">
+      {!error ? (
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          className={`${className} transition-transform duration-500 group-hover:scale-105`}
+          onError={() => setError(true)}
+        />
+      ) : (
+        <div className="flex h-full w-full items-center justify-center bg-muted p-4 text-center">
+          <div className="flex flex-col items-center gap-2">
+            <ShoppingBag className="h-10 w-10 text-muted-foreground/30" />
+            <span className="text-[10px] font-medium text-muted-foreground/60 uppercase tracking-tighter">
+              Gambar Segera Hadir
+            </span>
+          </div>
+        </div>
+      )}
+    </div>
+  )
 }
 
 function FeaturedProductsContent() {
@@ -313,11 +341,10 @@ function FeaturedProductsContent() {
               onClick={() => setSelectedProduct(product)}
             >
               <div className="relative aspect-square overflow-hidden">
-                <Image
+                <ProductImage
                   src={product.image}
                   alt={`${product.name} - Koleksi furniture premium dari Nova Interior design`}
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  className="object-cover"
                 />
                 {product.badge && (
                   <span className="absolute left-3 top-3 rounded-full bg-accent px-3 py-1 text-xs font-bold text-accent-foreground">
