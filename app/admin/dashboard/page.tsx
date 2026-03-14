@@ -3,10 +3,11 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { supabase } from "@/lib/supabase"
-import { LayoutDashboard, LogOut, Package, Users, Settings, Loader2, Plus, Edit, Trash2, Search, CheckCircle, Clock } from "lucide-react"
+import { LayoutDashboard, LogOut, Package, Users, Settings, Loader2, Plus, Edit, Trash2, Search, CheckCircle, Clock, X } from "lucide-react"
 
 // Mock Data
-const mockProducts = [
+let idCounter = 5;
+const initialMockProducts = [
   { id: 1, name: "Sofa Ruang Tamu Premium", category: "Sofa", price: 4599000, stock: 12, status: "Active" },
   { id: 2, name: "Meja Tamu Kayu Jati", category: "Meja", price: 1299000, stock: 5, status: "Low Stock" },
   { id: 3, name: "Lemari Pakaian 3 Pintu", category: "Lemari", price: 3799000, stock: 8, status: "Active" },
@@ -31,6 +32,12 @@ export default function AdminDashboardPage() {
   const [activeTab, setActiveTab] = useState("dashboard")
   const router = useRouter()
 
+  // Interactivity States
+  const [products, setProducts] = useState(initialMockProducts)
+  const [isAddingProduct, setIsAddingProduct] = useState(false)
+  const [newProduct, setNewProduct] = useState({ name: '', category: 'Sofa', price: 0, stock: 0 })
+  const [saveSettingsText, setSaveSettingsText] = useState("Simpan Perubahan")
+
   useEffect(() => {
     async function checkAuth() {
       const { data: { session } } = await supabase.auth.getSession()
@@ -49,6 +56,54 @@ export default function AdminDashboardPage() {
   const handleLogout = async () => {
     await supabase.auth.signOut()
     router.push("/admin/login")
+  }
+
+  // Action Handlers
+  const handleAddProduct = (e: React.FormEvent) => {
+    e.preventDefault()
+    const status = newProduct.stock > 10 ? "Active" : newProduct.stock > 0 ? "Low Stock" : "Out of Stock"
+    const productToAdd = {
+        id: idCounter++,
+        name: newProduct.name,
+        category: newProduct.category,
+        price: Number(newProduct.price),
+        stock: Number(newProduct.stock),
+        status: status
+    }
+    setProducts([productToAdd, ...products])
+    setIsAddingProduct(false)
+    setNewProduct({ name: '', category: 'Sofa', price: 0, stock: 0 })
+  }
+
+  const handleDeleteProduct = (id: number) => {
+      setProducts(products.filter((p: any) => p.id !== id))
+  }
+
+  const handleExportCSV = () => {
+      const headers = ["ID", "Nama", "Email", "Telepon", "Pesanan", "Total Belanja", "Bergabung"]
+      const csvContent = [
+          headers.join(","),
+          ...mockCustomers.map(c => `${c.id},"${c.name}",${c.email},${c.phone},${c.orders},${c.totalSpent},${c.joined}`)
+      ].join("\n")
+
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
+      const link = document.createElement("a")
+      const url = URL.createObjectURL(blob)
+      link.setAttribute("href", url)
+      link.setAttribute("download", "data_pelanggan_nova_interior.csv")
+      link.style.visibility = 'hidden'
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+  }
+
+  const handleSaveSettings = (e: React.FormEvent) => {
+      e.preventDefault()
+      setSaveSettingsText("Menyimpan...")
+      setTimeout(() => {
+          setSaveSettingsText("Tersimpan!")
+          setTimeout(() => setSaveSettingsText("Simpan Perubahan"), 2000)
+      }, 1000)
   }
 
   if (loading) {
@@ -218,10 +273,13 @@ export default function AdminDashboardPage() {
         )}
 
         {activeTab === "produk" && (
-          <div className="animate-in fade-in zoom-in-95 duration-500">
+          <div className="animate-in fade-in zoom-in-95 duration-500 relative">
             <div className="flex justify-between items-center mb-6">
                 <h3 className="text-xl font-bold text-[#352014] font-serif">Daftar Produk</h3>
-                <button className="flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-bold text-white shadow-lg transition-transform hover:scale-105 active:scale-95">
+                <button 
+                    onClick={() => setIsAddingProduct(true)}
+                    className="flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-bold text-white shadow-lg transition-transform hover:scale-105 active:scale-95"
+                >
                     <Plus className="h-4 w-4" /> Tambah Produk
                 </button>
             </div>
@@ -249,7 +307,7 @@ export default function AdminDashboardPage() {
                             </tr>
                         </thead>
                         <tbody>
-                            {mockProducts.map((product) => (
+                            {products.map((product) => (
                                 <tr key={product.id} className="border-b border-[#e8dfcf] last:border-0 hover:bg-slate-50 transition-colors">
                                     <td className="px-6 py-4 font-medium text-[#352014]">{product.name}</td>
                                     <td className="px-6 py-4 text-muted-foreground">{product.category}</td>
@@ -266,7 +324,7 @@ export default function AdminDashboardPage() {
                                     <td className="px-6 py-4 text-right">
                                         <div className="flex justify-end gap-2">
                                             <button className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"><Edit className="h-4 w-4" /></button>
-                                            <button className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"><Trash2 className="h-4 w-4" /></button>
+                                            <button onClick={() => handleDeleteProduct(product.id)} className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"><Trash2 className="h-4 w-4" /></button>
                                         </div>
                                     </td>
                                 </tr>
@@ -275,6 +333,50 @@ export default function AdminDashboardPage() {
                     </table>
                 </div>
             </div>
+
+            {/* Add Product Modal */}
+            {isAddingProduct && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm px-4">
+                    <div className="bg-white rounded-3xl shadow-2xl w-full max-w-lg overflow-hidden animate-in fade-in zoom-in-95 duration-300">
+                        <div className="flex justify-between items-center p-6 border-b border-[#e8dfcf] bg-[#fdfaf6]">
+                            <h3 className="font-serif text-xl font-bold text-[#352014]">Tambah Produk Baru</h3>
+                            <button onClick={() => setIsAddingProduct(false)} className="text-muted-foreground hover:text-[#352014] transition-colors">
+                                <X className="h-5 w-5" />
+                            </button>
+                        </div>
+                        <form onSubmit={handleAddProduct} className="p-6 space-y-4">
+                            <div className="space-y-2">
+                                <label className="text-sm font-bold text-[#352014]">Nama Produk</label>
+                                <input required type="text" value={newProduct.name} onChange={e => setNewProduct({...newProduct, name: e.target.value})} className="w-full rounded-xl border border-[#e8dfcf] bg-[#fdfaf6] px-4 py-3 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary" placeholder="Masukkan nama produk..." />
+                            </div>
+                            <div className="grid grid-cols-2 gap-4">
+                                <div className="space-y-2">
+                                    <label className="text-sm font-bold text-[#352014]">Kategori</label>
+                                    <select value={newProduct.category} onChange={e => setNewProduct({...newProduct, category: e.target.value})} className="w-full rounded-xl border border-[#e8dfcf] bg-[#fdfaf6] px-4 py-3 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary">
+                                        <option value="Sofa">Sofa</option>
+                                        <option value="Meja">Meja</option>
+                                        <option value="Lemari">Lemari</option>
+                                        <option value="Tempat Tidur">Tempat Tidur</option>
+                                        <option value="Kursi">Kursi</option>
+                                    </select>
+                                </div>
+                                <div className="space-y-2">
+                                    <label className="text-sm font-bold text-[#352014]">Stok</label>
+                                    <input required type="number" min="0" value={newProduct.stock} onChange={e => setNewProduct({...newProduct, stock: parseInt(e.target.value) || 0})} className="w-full rounded-xl border border-[#e8dfcf] bg-[#fdfaf6] px-4 py-3 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary" />
+                                </div>
+                            </div>
+                            <div className="space-y-2">
+                                <label className="text-sm font-bold text-[#352014]">Harga (Rp)</label>
+                                <input required type="number" min="0" value={newProduct.price} onChange={e => setNewProduct({...newProduct, price: parseInt(e.target.value) || 0})} className="w-full rounded-xl border border-[#e8dfcf] bg-[#fdfaf6] px-4 py-3 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary" />
+                            </div>
+                            <div className="pt-4 flex justify-end gap-3">
+                                <button type="button" onClick={() => setIsAddingProduct(false)} className="rounded-xl px-6 py-3 text-sm font-bold text-muted-foreground hover:bg-slate-100 transition-colors">Batal</button>
+                                <button type="submit" className="rounded-xl bg-primary px-6 py-3 text-sm font-bold text-white shadow-md hover:bg-primary/90 transition-colors">Simpan Produk</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
           </div>
         )}
 
@@ -282,7 +384,7 @@ export default function AdminDashboardPage() {
           <div className="animate-in fade-in zoom-in-95 duration-500">
             <div className="flex justify-between items-center mb-6">
                 <h3 className="text-xl font-bold text-[#352014] font-serif">Data Pelanggan</h3>
-                <button className="flex items-center gap-2 rounded-xl border border-[#e8dfcf] bg-white px-4 py-2.5 text-sm font-bold text-[#352014] shadow-sm transition-all hover:bg-slate-50">
+                <button onClick={handleExportCSV} className="flex items-center gap-2 rounded-xl border border-[#e8dfcf] bg-white px-4 py-2.5 text-sm font-bold text-[#352014] shadow-sm transition-all hover:bg-slate-50">
                     Ekspor CSV
                 </button>
             </div>
@@ -337,7 +439,7 @@ export default function AdminDashboardPage() {
             <h3 className="text-xl font-bold text-[#352014] mb-6 font-serif">Pengaturan Sistem</h3>
             
             <div className="bg-white rounded-3xl border border-[#e8dfcf] shadow-sm p-6 sm:p-10">
-                <form className="space-y-8" onSubmit={(e: any) => e.preventDefault()}>
+                <form className="space-y-8" onSubmit={handleSaveSettings}>
                     <div className="space-y-6">
                         <h4 className="text-sm font-bold uppercase tracking-widest text-[#6d4c3d]/60 border-b border-[#f0ebe3] pb-2">Informasi Toko</h4>
                         
@@ -377,8 +479,8 @@ export default function AdminDashboardPage() {
                     </div>
 
                     <div className="pt-4 flex justify-end">
-                        <button type="submit" className="rounded-xl bg-primary px-8 py-3 text-sm font-bold text-white shadow-lg transition-transform hover:scale-105 active:scale-95">
-                            Simpan Perubahan
+                        <button type="submit" disabled={saveSettingsText !== "Simpan Perubahan"} className={`rounded-xl px-8 py-3 text-sm font-bold text-white shadow-lg transition-all ${saveSettingsText === "Tersimpan!" ? "bg-green-600 border-green-600" : saveSettingsText === "Menyimpan..." ? "bg-muted-foreground" : "bg-primary hover:scale-105 active:scale-95"}`}>
+                            {saveSettingsText}
                         </button>
                     </div>
                 </form>
