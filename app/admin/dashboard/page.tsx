@@ -3,7 +3,27 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { supabase } from "@/lib/supabase"
-import { LayoutDashboard, LogOut, Package, Users, Settings, Loader2 } from "lucide-react"
+import { LayoutDashboard, LogOut, Package, Users, Settings, Loader2, Plus, Edit, Trash2, Search, CheckCircle, Clock } from "lucide-react"
+
+// Mock Data
+const mockProducts = [
+  { id: 1, name: "Sofa Ruang Tamu Premium", category: "Sofa", price: 4599000, stock: 12, status: "Active" },
+  { id: 2, name: "Meja Tamu Kayu Jati", category: "Meja", price: 1299000, stock: 5, status: "Low Stock" },
+  { id: 3, name: "Lemari Pakaian 3 Pintu", category: "Lemari", price: 3799000, stock: 8, status: "Active" },
+  { id: 4, name: "Ranjang Kayu Minimalis", category: "Tempat Tidur", price: 3299000, stock: 0, status: "Out of Stock" },
+]
+
+const mockCustomers = [
+  { id: 1, name: "Budi Santoso", email: "budi@example.com", phone: "081234567890", orders: 3, totalSpent: 12500000, joined: "2023-11-15" },
+  { id: 2, name: "Siti Aminah", email: "siti@example.com", phone: "081987654321", orders: 1, totalSpent: 4599000, joined: "2024-01-20" },
+  { id: 3, name: "Ahmad Dahlan", email: "ahmad@example.com", phone: "085612349876", orders: 5, totalSpent: 24000000, joined: "2023-08-05" },
+]
+
+const mockOrders = [
+  { id: "ORD-2026-001", customer: "Budi Santoso", date: "Hari ini", total: 4599000, status: "Selesai" },
+  { id: "ORD-2026-002", customer: "Siti Aminah", date: "Kemarin", total: 1299000, status: "Diproses" },
+  { id: "ORD-2026-003", customer: "Ahmad Dahlan", date: "12 Mar 2026", total: 3799000, status: "Menunggu" },
+]
 
 export default function AdminDashboardPage() {
   const [user, setUser] = useState<any>(null)
@@ -137,75 +157,232 @@ export default function AdminDashboardPage() {
             {/* Stats Grid */}
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
               <div className="group rounded-3xl bg-white p-8 border border-[#e8dfcf] shadow-sm transition-all hover:shadow-md hover:border-[#6d4c3d]/20">
-                <p className="text-xs font-bold uppercase tracking-widest text-[#6d4c3d]/60 mb-2">Total Produk</p>
-                <h3 className="text-4xl font-bold text-[#352014]">16</h3>
+                <p className="text-xs font-bold uppercase tracking-widest text-[#6d4c3d]/60 mb-2">Total Pendapatan</p>
+                <h3 className="text-4xl font-bold text-[#352014]">Rp 41M</h3>
                 <div className="mt-4 flex items-center gap-2 text-xs font-bold text-green-600">
-                  <span className="rounded-full bg-green-50 px-2 py-1">+2 Bulan ini</span>
+                  <span className="rounded-full bg-green-50 px-2 py-1">+12.5% Bulan ini</span>
                 </div>
               </div>
               <div className="group rounded-3xl bg-white p-8 border border-[#e8dfcf] shadow-sm transition-all hover:shadow-md hover:border-[#6d4c3d]/20">
-                <p className="text-xs font-bold uppercase tracking-widest text-[#6d4c3d]/60 mb-2">Pesan Masuk</p>
-                <h3 className="text-4xl font-bold text-[#352014]">24</h3>
+                <p className="text-xs font-bold uppercase tracking-widest text-[#6d4c3d]/60 mb-2">Total Pesanan</p>
+                <h3 className="text-4xl font-bold text-[#352014]">128</h3>
                 <div className="mt-4 flex items-center gap-2 text-xs font-bold text-accent">
-                  <span className="rounded-full bg-accent/5 px-2 py-1">Pending: 5</span>
+                  <span className="rounded-full bg-accent/5 px-2 py-1">5 Menunggu Konfirmasi</span>
                 </div>
               </div>
               <div className="group rounded-3xl bg-white p-8 border border-[#e8dfcf] shadow-sm transition-all hover:shadow-md hover:border-[#6d4c3d]/20">
-                <p className="text-xs font-bold uppercase tracking-widest text-[#6d4c3d]/60 mb-2">Sistem</p>
-                <h3 className="text-4xl font-bold text-[#352014]">Active</h3>
-                <p className="mt-4 text-xs font-bold text-muted-foreground/60 italic">Supabase Auth Connected</p>
+                <p className="text-xs font-bold uppercase tracking-widest text-[#6d4c3d]/60 mb-2">Total Pelanggan</p>
+                <h3 className="text-4xl font-bold text-[#352014]">84</h3>
+                <p className="mt-4 text-xs font-bold text-green-600"><span className="rounded-full bg-green-50 px-2 py-1">+3 Pelanggan Baru</span></p>
               </div>
             </div>
 
             {/* Quick Actions / Recent Activity Placeholder */}
-            <div className="mt-10 rounded-3xl border border-dashed border-[#e8dfcf] bg-white/40 p-20 text-center">
-                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-muted/20 text-muted-foreground/30">
-                    <LayoutDashboard className="h-10 w-10" />
+            <div className="mt-10">
+                <h3 className="text-xl font-bold text-[#352014] mb-6 font-serif">Aktivitas Pesanan Terbaru</h3>
+                <div className="bg-white rounded-3xl border border-[#e8dfcf] shadow-sm overflow-hidden">
+                    <div className="overflow-x-auto">
+                        <table className="w-full text-sm text-left">
+                            <thead className="text-xs text-[#6d4c3d] uppercase bg-[#fdfaf6] border-b border-[#e8dfcf]">
+                                <tr>
+                                    <th className="px-6 py-4 font-bold">ID Pesanan</th>
+                                    <th className="px-6 py-4 font-bold">Pelanggan</th>
+                                    <th className="px-6 py-4 font-bold">Tanggal</th>
+                                    <th className="px-6 py-4 font-bold">Total</th>
+                                    <th className="px-6 py-4 font-bold">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {mockOrders.map((order, idx) => (
+                                    <tr key={idx} className="border-b border-[#e8dfcf] last:border-0 hover:bg-slate-50 transition-colors">
+                                        <td className="px-6 py-4 font-medium text-[#352014]">{order.id}</td>
+                                        <td className="px-6 py-4 text-muted-foreground">{order.customer}</td>
+                                        <td className="px-6 py-4 text-muted-foreground">{order.date}</td>
+                                        <td className="px-6 py-4 font-medium text-[#352014]">Rp {order.total.toLocaleString("id-ID")}</td>
+                                        <td className="px-6 py-4">
+                                            <span className={`px-3 py-1 rounded-full text-xs font-bold ${
+                                                order.status === 'Selesai' ? 'bg-green-100 text-green-700' : 
+                                                order.status === 'Diproses' ? 'bg-blue-100 text-blue-700' : 'bg-amber-100 text-amber-700'
+                                            }`}>
+                                                {order.status}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-                <h3 className="text-lg font-bold text-[#352014]">Ringkasan Aktivitas</h3>
-                <p className="mx-auto mt-2 max-w-sm text-sm text-muted-foreground leading-relaxed">
-                    Statistik mendalam dan grafik aktivitas terbaru akan muncul di sini seiring bertambahnya data Anda.
-                </p>
             </div>
           </>
         )}
 
         {activeTab === "produk" && (
-          <div className="rounded-3xl border border-dashed border-[#e8dfcf] bg-white/40 p-20 text-center animate-in fade-in zoom-in-95 duration-500">
-            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 text-primary">
-                <Package className="h-10 w-10" />
+          <div className="animate-in fade-in zoom-in-95 duration-500">
+            <div className="flex justify-between items-center mb-6">
+                <h3 className="text-xl font-bold text-[#352014] font-serif">Daftar Produk</h3>
+                <button className="flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-bold text-white shadow-lg transition-transform hover:scale-105 active:scale-95">
+                    <Plus className="h-4 w-4" /> Tambah Produk
+                </button>
             </div>
-            <h3 className="text-lg font-bold text-[#352014]">Panel Pengelolaan Produk</h3>
-            <p className="mx-auto mt-2 max-w-sm text-sm text-muted-foreground leading-relaxed">
-                Fitur pengelolaan produk secara visual sedang disiapkan. Anda dapat mengontrol data melalui dashboard Supabase untuk saat ini.
-            </p>
-            <button className="mt-6 rounded-xl bg-primary px-6 py-3 text-sm font-bold text-white shadow-lg transition-transform hover:scale-105 active:scale-95">
-              Tambah Produk Baru
-            </button>
+            
+            <div className="bg-white rounded-3xl border border-[#e8dfcf] shadow-sm overflow-hidden mb-6 flex items-center px-4 py-3">
+                <Search className="h-5 w-5 text-muted-foreground mr-3" />
+                <input 
+                    type="text" 
+                    placeholder="Cari nama produk, kategori..." 
+                    className="w-full bg-transparent border-none outline-none text-sm text-[#352014] placeholder:text-muted-foreground focus:ring-0"
+                />
+            </div>
+
+            <div className="bg-white rounded-3xl border border-[#e8dfcf] shadow-sm overflow-hidden">
+                <div className="overflow-x-auto">
+                    <table className="w-full text-sm text-left">
+                        <thead className="text-xs text-[#6d4c3d] uppercase bg-[#fdfaf6] border-b border-[#e8dfcf]">
+                            <tr>
+                                <th className="px-6 py-4 font-bold">Produk</th>
+                                <th className="px-6 py-4 font-bold">Kategori</th>
+                                <th className="px-6 py-4 font-bold">Harga</th>
+                                <th className="px-6 py-4 font-bold">Stok</th>
+                                <th className="px-6 py-4 font-bold">Status</th>
+                                <th className="px-6 py-4 font-bold text-right">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {mockProducts.map((product) => (
+                                <tr key={product.id} className="border-b border-[#e8dfcf] last:border-0 hover:bg-slate-50 transition-colors">
+                                    <td className="px-6 py-4 font-medium text-[#352014]">{product.name}</td>
+                                    <td className="px-6 py-4 text-muted-foreground">{product.category}</td>
+                                    <td className="px-6 py-4 font-medium text-[#352014]">Rp {product.price.toLocaleString("id-ID")}</td>
+                                    <td className="px-6 py-4 text-muted-foreground">{product.stock}</td>
+                                    <td className="px-6 py-4">
+                                        <span className={`px-3 py-1 rounded-full text-xs font-bold ${
+                                            product.status === 'Active' ? 'bg-green-100 text-green-700' : 
+                                            product.status === 'Low Stock' ? 'bg-amber-100 text-amber-700' : 'bg-red-100 text-red-700'
+                                        }`}>
+                                            {product.status}
+                                        </span>
+                                    </td>
+                                    <td className="px-6 py-4 text-right">
+                                        <div className="flex justify-end gap-2">
+                                            <button className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"><Edit className="h-4 w-4" /></button>
+                                            <button className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"><Trash2 className="h-4 w-4" /></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
           </div>
         )}
 
         {activeTab === "pelanggan" && (
-          <div className="rounded-3xl border border-dashed border-[#e8dfcf] bg-white/40 p-20 text-center animate-in fade-in zoom-in-95 duration-500">
-            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-accent/10 text-accent">
-                <Users className="h-10 w-10" />
+          <div className="animate-in fade-in zoom-in-95 duration-500">
+            <div className="flex justify-between items-center mb-6">
+                <h3 className="text-xl font-bold text-[#352014] font-serif">Data Pelanggan</h3>
+                <button className="flex items-center gap-2 rounded-xl border border-[#e8dfcf] bg-white px-4 py-2.5 text-sm font-bold text-[#352014] shadow-sm transition-all hover:bg-slate-50">
+                    Ekspor CSV
+                </button>
             </div>
-            <h3 className="text-lg font-bold text-[#352014]">Database Pelanggan</h3>
-            <p className="mx-auto mt-2 max-w-sm text-sm text-muted-foreground leading-relaxed">
-                Daftar pelanggan yang telah menghubungi atau membeli produk Anda akan ditampilkan di sini.
-            </p>
+
+            <div className="bg-white rounded-3xl border border-[#e8dfcf] shadow-sm overflow-hidden mb-6 flex items-center px-4 py-3">
+                <Search className="h-5 w-5 text-muted-foreground mr-3" />
+                <input 
+                    type="text" 
+                    placeholder="Cari nama, email, atau telepon..." 
+                    className="w-full bg-transparent border-none outline-none text-sm text-[#352014] placeholder:text-muted-foreground focus:ring-0"
+                />
+            </div>
+            
+            <div className="bg-white rounded-3xl border border-[#e8dfcf] shadow-sm overflow-hidden">
+                <div className="overflow-x-auto">
+                    <table className="w-full text-sm text-left">
+                        <thead className="text-xs text-[#6d4c3d] uppercase bg-[#fdfaf6] border-b border-[#e8dfcf]">
+                            <tr>
+                                <th className="px-6 py-4 font-bold">Nama</th>
+                                <th className="px-6 py-4 font-bold">Kontak</th>
+                                <th className="px-6 py-4 font-bold">Bergabung</th>
+                                <th className="px-6 py-4 font-bold">Pesanan</th>
+                                <th className="px-6 py-4 font-bold">Total Belanja</th>
+                                <th className="px-6 py-4 font-bold text-right">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {mockCustomers.map((customer) => (
+                                <tr key={customer.id} className="border-b border-[#e8dfcf] last:border-0 hover:bg-slate-50 transition-colors">
+                                    <td className="px-6 py-4 font-medium text-[#352014]">{customer.name}</td>
+                                    <td className="px-6 py-4">
+                                        <div className="text-sm text-[#352014]">{customer.email}</div>
+                                        <div className="text-xs text-muted-foreground mt-0.5">{customer.phone}</div>
+                                    </td>
+                                    <td className="px-6 py-4 text-muted-foreground">{customer.joined}</td>
+                                    <td className="px-6 py-4 text-muted-foreground">{customer.orders}</td>
+                                    <td className="px-6 py-4 font-medium text-[#352014]">Rp {customer.totalSpent.toLocaleString("id-ID")}</td>
+                                    <td className="px-6 py-4 text-right">
+                                        <button className="text-sm font-bold text-primary hover:text-[#352014] transition-colors">Detail</button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
           </div>
         )}
 
         {activeTab === "pengaturan" && (
-          <div className="rounded-3xl border border-dashed border-[#e8dfcf] bg-white/40 p-20 text-center animate-in fade-in zoom-in-95 duration-500">
-            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-muted/20 text-muted-foreground/30">
-                <Settings className="h-10 w-10" />
+          <div className="animate-in fade-in zoom-in-95 duration-500">
+            <h3 className="text-xl font-bold text-[#352014] mb-6 font-serif">Pengaturan Sistem</h3>
+            
+            <div className="bg-white rounded-3xl border border-[#e8dfcf] shadow-sm p-6 sm:p-10">
+                <form className="space-y-8" onSubmit={(e: any) => e.preventDefault()}>
+                    <div className="space-y-6">
+                        <h4 className="text-sm font-bold uppercase tracking-widest text-[#6d4c3d]/60 border-b border-[#f0ebe3] pb-2">Informasi Toko</h4>
+                        
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="space-y-2">
+                                <label className="text-sm font-bold text-[#352014]">Nama Toko</label>
+                                <input type="text" defaultValue="Nova Interior" className="w-full rounded-xl border border-[#e8dfcf] bg-[#fdfaf6] px-4 py-3 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary transition-all" />
+                            </div>
+                            <div className="space-y-2">
+                                <label className="text-sm font-bold text-[#352014]">Nomor WhatsApp Bantuan</label>
+                                <input type="text" defaultValue="089692530975" className="w-full rounded-xl border border-[#e8dfcf] bg-[#fdfaf6] px-4 py-3 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary transition-all" />
+                            </div>
+                            <div className="space-y-2 md:col-span-2">
+                                <label className="text-sm font-bold text-[#352014]">Deskripsi Singkat</label>
+                                <textarea rows={3} defaultValue="Toko furniture premium dengan desain modern minimalis." className="w-full rounded-xl border border-[#e8dfcf] bg-[#fdfaf6] px-4 py-3 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary transition-all resize-none"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="space-y-6">
+                        <h4 className="text-sm font-bold uppercase tracking-widest text-[#6d4c3d]/60 border-b border-[#f0ebe3] pb-2">Preferensi Notifikasi</h4>
+                        
+                        <div className="space-y-4">
+                            <label className="flex items-center gap-3 cursor-pointer">
+                                <input type="checkbox" defaultChecked className="w-5 h-5 rounded text-primary focus:ring-primary border-[#e8dfcf]" />
+                                <span className="text-sm font-medium text-[#352014]">Terima notifikasi email untuk pesanan baru</span>
+                            </label>
+                            <label className="flex items-center gap-3 cursor-pointer">
+                                <input type="checkbox" defaultChecked className="w-5 h-5 rounded text-primary focus:ring-primary border-[#e8dfcf]" />
+                                <span className="text-sm font-medium text-[#352014]">Terima notifikasi untuk pendaftaran pelanggan baru</span>
+                            </label>
+                            <label className="flex items-center gap-3 cursor-pointer">
+                                <input type="checkbox" className="w-5 h-5 rounded text-primary focus:ring-primary border-[#e8dfcf]" />
+                                <span className="text-sm font-medium text-[#352014]">Laporan mingguan via email</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div className="pt-4 flex justify-end">
+                        <button type="submit" className="rounded-xl bg-primary px-8 py-3 text-sm font-bold text-white shadow-lg transition-transform hover:scale-105 active:scale-95">
+                            Simpan Perubahan
+                        </button>
+                    </div>
+                </form>
             </div>
-            <h3 className="text-lg font-bold text-[#352014]">Pengaturan Sistem</h3>
-            <p className="mx-auto mt-2 max-w-sm text-sm text-muted-foreground leading-relaxed">
-                Konfigurasi website, profil admin, dan preferensi notifikasi dapat diatur di sini.
-            </p>
           </div>
         )}
       </main>
