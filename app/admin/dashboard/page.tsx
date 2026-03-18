@@ -83,16 +83,15 @@ export default function AdminDashboardPage() {
         price: Number(newProduct.price),
         stock: Number(newProduct.stock),
         status: status,
-        originalPrice: Number(newProduct.price) * 1.2,
-        rating: 5.0,
-        reviews: 0,
-        image: "https://images.unsplash.com/photo-1540518614846-7eded433c457?auto=format&fit=crop&q=80&w=800",
-        description: "Deskripsi singkat produk"
     }
     
     try {
         const { data, error } = await supabase.from('products').insert([productToAdd]).select()
-        if (error) throw error
+        if (error) {
+            console.error('Supabase insert error:', error)
+            alert(`Gagal menambah produk: ${error.message}`)
+            return
+        }
         
         if (data && data.length > 0) {
             setProducts([data[0], ...products])
