@@ -33,10 +33,12 @@ export default function AdminDashboardPage() {
   const router = useRouter()
 
   // Interactivity States
-  const [products, setProducts] = useState(initialMockProducts)
+  const [products, setProducts] = useState<any[]>([])
+  const [productSearch, setProductSearch] = useState("")
   const [isAddingProduct, setIsAddingProduct] = useState(false)
   const [newProduct, setNewProduct] = useState({ name: '', category: 'Sofa', price: 0, stock: 0 })
   const [saveSettingsText, setSaveSettingsText] = useState("Simpan Perubahan")
+  const [customerSearch, setCustomerSearch] = useState("")
 
   useEffect(() => {
     async function checkAuth() {
@@ -47,6 +49,17 @@ export default function AdminDashboardPage() {
       } else {
         setUser(session.user)
         setLoading(false)
+        fetchProducts()
+      }
+    }
+
+    async function fetchProducts() {
+      try {
+        const { data, error } = await supabase.from('products').select('*').order('id', { ascending: false })
+        if (error) throw error
+        if (data) setProducts(data)
+      } catch (err) {
+        console.error('Error fetching products:', err)
       }
     }
 
@@ -59,34 +72,68 @@ export default function AdminDashboardPage() {
   }
 
   // Action Handlers
-  const handleAddProduct = (e: React.FormEvent) => {
+  const handleAddProduct = async (e: React.FormEvent) => {
     e.preventDefault()
+    setIsAddingProduct(false)
+    
     const status = newProduct.stock > 10 ? "Active" : newProduct.stock > 0 ? "Low Stock" : "Out of Stock"
     const productToAdd = {
-        id: idCounter++,
         name: newProduct.name,
         category: newProduct.category,
         price: Number(newProduct.price),
         stock: Number(newProduct.stock),
-        status: status
+        status: status,
+        originalPrice: Number(newProduct.price) * 1.2,
+        rating: 5.0,
+        reviews: 0,
+        image: "https://images.unsplash.com/photo-1540518614846-7eded433c457?auto=format&fit=crop&q=80&w=800",
+        description: "Deskripsi singkat produk"
     }
-    setProducts([productToAdd, ...products])
-    setIsAddingProduct(false)
-    setNewProduct({ name: '', category: 'Sofa', price: 0, stock: 0 })
+    
+    try {
+        const { data, error } = await supabase.from('products').insert([productToAdd]).select()
+        if (error) throw error
+        
+        if (data && data.length > 0) {
+            setProducts([data[0], ...products])
+        }
+        setNewProduct({ name: '', category: 'Sofa', price: 0, stock: 0 })
+    } catch (err) {
+        console.error('Error adding product:', err)
+        alert('Gagal menambah produk. Pastikan database Anda siap.')
+    }
   }
 
-  const handleDeleteProduct = (id: number) => {
-      setProducts(products.filter((p: any) => p.id !== id))
+  const handleDeleteProduct = async (id: number) => {
+      try {
+          const { error } = await supabase.from('products').delete().eq('id', id)
+          if (error) throw error
+          setProducts(products.filter((p: any) => p.id !== id))
+      } catch (err) {
+          console.error('Error deleting product', err)
+          alert('Gagal menghapus produk.')
+      }
   }
+
+  const filteredProducts = products.filter((p: any) => 
+      p.name.toLowerCase().includes(productSearch.toLowerCase()) || 
+      (p.category && p.category.toLowerCase().includes(productSearch.toLowerCase()))
+  )
+
+  const filteredCustomers = mockCustomers.filter(c => 
+      c.name.toLowerCase().includes(customerSearch.toLowerCase()) || 
+      c.email.toLowerCase().includes(customerSearch.toLowerCase()) || 
+      c.phone.includes(customerSearch)
+  )
 
   const handleExportCSV = () => {
       const headers = ["ID", "Nama", "Email", "Telepon", "Pesanan", "Total Belanja", "Bergabung"]
       const csvContent = [
-          headers.join(","),
-          ...mockCustomers.map(c => `${c.id},"${c.name}",${c.email},${c.phone},${c.orders},${c.totalSpent},${c.joined}`)
+          headers.join(";"),
+          ...filteredCustomers.map(c => `${c.id};"${c.name}";${c.email};${c.phone};${c.orders};${c.totalSpent};${c.joined}`)
       ].join("\n")
 
-      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
+      const blob = new Blob(["\uFEFF" + csvContent], { type: 'text/csv;charset=utf-8;' })
       const link = document.createElement("a")
       const url = URL.createObjectURL(blob)
       link.setAttribute("href", url)
@@ -288,6 +335,8 @@ export default function AdminDashboardPage() {
                 <Search className="h-5 w-5 text-muted-foreground mr-3" />
                 <input 
                     type="text" 
+                    value={productSearch}
+                    onChange={(e) => setProductSearch(e.target.value)}
                     placeholder="Cari nama produk, kategori..." 
                     className="w-full bg-transparent border-none outline-none text-sm text-[#352014] placeholder:text-muted-foreground focus:ring-0"
                 />
@@ -307,7 +356,7 @@ export default function AdminDashboardPage() {
                             </tr>
                         </thead>
                         <tbody>
-                            {products.map((product) => (
+                            {filteredProducts.map((product) => (
                                 <tr key={product.id} className="border-b border-[#e8dfcf] last:border-0 hover:bg-slate-50 transition-colors">
                                     <td className="px-6 py-4 font-medium text-[#352014]">{product.name}</td>
                                     <td className="px-6 py-4 text-muted-foreground">{product.category}</td>
@@ -393,6 +442,8 @@ export default function AdminDashboardPage() {
                 <Search className="h-5 w-5 text-muted-foreground mr-3" />
                 <input 
                     type="text" 
+                    value={customerSearch}
+                    onChange={(e) => setCustomerSearch(e.target.value)}
                     placeholder="Cari nama, email, atau telepon..." 
                     className="w-full bg-transparent border-none outline-none text-sm text-[#352014] placeholder:text-muted-foreground focus:ring-0"
                 />
@@ -412,7 +463,7 @@ export default function AdminDashboardPage() {
                             </tr>
                         </thead>
                         <tbody>
-                            {mockCustomers.map((customer) => (
+                            {filteredCustomers.map((customer) => (
                                 <tr key={customer.id} className="border-b border-[#e8dfcf] last:border-0 hover:bg-slate-50 transition-colors">
                                     <td className="px-6 py-4 font-medium text-[#352014]">{customer.name}</td>
                                     <td className="px-6 py-4">
