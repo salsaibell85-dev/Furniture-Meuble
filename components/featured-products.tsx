@@ -315,7 +315,22 @@ function FeaturedProductsContent() {
     fetchProducts()
   }, [])
 
-  const allProductsList = dbProducts.length > 0 ? dbProducts : products
+  const mappedDbProducts = dbProducts.map(dbp => {
+    if (!dbp.image) {
+      const fallback = products.find(p => p.category === dbp.category)?.image || "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&q=80&w=800"
+      return {
+        ...dbp,
+        image: fallback,
+        originalPrice: dbp.originalPrice || Math.round(dbp.price * 1.3),
+        rating: dbp.rating || 4.8,
+        reviews: dbp.reviews || Math.floor(Math.random() * 50) + 10,
+        badge: dbp.badge || (dbp.status === 'Promo' ? 'Promo' : null)
+      }
+    }
+    return dbp;
+  });
+
+  const allProductsList = mappedDbProducts.length > 0 ? mappedDbProducts : products
 
   const filtered =
     active === "Semua"
