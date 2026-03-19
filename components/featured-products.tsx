@@ -330,7 +330,9 @@ function FeaturedProductsContent() {
     return dbp;
   });
 
-  const allProductsList = mappedDbProducts.length > 0 ? mappedDbProducts : products
+  // Merge mapping db products with default products, so catalog is full
+  const defaultProducts = products.filter(p => !mappedDbProducts.find(mdp => mdp.name === p.name));
+  const allProductsList = [...mappedDbProducts, ...defaultProducts];
 
   const filtered =
     active === "Semua"
