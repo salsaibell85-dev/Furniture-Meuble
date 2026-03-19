@@ -119,7 +119,7 @@ const products = [
     originalPrice: 9499000,
     rating: 5.0,
     reviews: 45,
-    image: "https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&q=80&w=800",
+    image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&q=80&w=800",
     badge: "Luxury",
     description: "Sofa sectional dengan kain velvet mewah yang memberikan sentuhan glamor pada ruang tamu Anda. Tersedia dalam berbagai pilihan warna yang modern dan berkelas.",
   },
@@ -131,7 +131,7 @@ const products = [
     originalPrice: 2899000,
     rating: 4.8,
     reviews: 32,
-    image: "https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?auto=format&fit=crop&q=80&w=800",
+    image: "https://images.unsplash.com/photo-1519643381401-22c77e60520e?auto=format&fit=crop&q=80&w=800",
     badge: "Work from Home",
     description: "Meja kerja dengan desain ramping dan laci tersembunyi. Cocok untuk sudut ruangan kecil tanpa mengorbankan fungsionalitas dan estetika.",
   },
@@ -155,7 +155,7 @@ const products = [
     originalPrice: 3299000,
     rating: 4.8,
     reviews: 67,
-    image: "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?auto=format&fit=crop&q=80&w=800",
+    image: "https://images.unsplash.com/photo-1598300056393-4aac492f4344?auto=format&fit=crop&q=80&w=800",
     badge: "Design Award",
     description: "Kursi santai dengan desain scandinavian yang ikonik. Rangka kayu melengkung yang artistik dipadukan dengan bantalan fabric yang super nyaman.",
   },
@@ -167,7 +167,7 @@ const products = [
     originalPrice: 6599000,
     rating: 4.9,
     reviews: 54,
-    image: "https://images.unsplash.com/photo-1540518614846-7eded433c457?auto=format&fit=crop&q=80&w=800",
+    image: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&q=80&w=800",
     badge: "Most Comfortable",
     description: "Tempat tidur queen size dengan headboard berlapis busa empuk. Memberikan dukungan yang baik saat Anda ingin bersantai atau membaca sebelum tidur.",
   },
@@ -179,7 +179,7 @@ const products = [
     originalPrice: 1699000,
     rating: 4.7,
     reviews: 39,
-    image: "https://images.unsplash.com/photo-1616486029423-aaa4789e8c9a?auto=format&fit=crop&q=80&w=800",
+    image: "https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?auto=format&fit=crop&q=80&w=800",
     badge: "Promotion",
     description: "Rak serbaguna yang cocok untuk diletakkan di ruang tamu atau koridor. Desain rampingnya tidak memakan banyak tempat namun memberikan ruang display yang cukup.",
   },
@@ -191,7 +191,7 @@ const products = [
     originalPrice: 3899000,
     rating: 4.8,
     reviews: 25,
-    image: "https://images.unsplash.com/photo-1544450186-39a7ccc3c73c?auto=format&fit=crop&q=80&w=800",
+    image: "https://images.unsplash.com/photo-1532372320572-cda25653a26d?auto=format&fit=crop&q=80&w=800",
     badge: "Top Seller",
     description: "Meja rias dengan cermin besar dan pencahayaan terintegrasi. Dilengkapi banyak laci untuk menyimpan koleksi kosmetik Anda secara rapi dan terorganisir.",
   },
@@ -203,7 +203,7 @@ const products = [
     originalPrice: 2699000,
     rating: 4.9,
     reviews: 42,
-    image: "https://images.unsplash.com/photo-1556911220-e152748a7315?auto=format&fit=crop&q=80&w=800",
+    image: "https://images.unsplash.com/photo-1556228578-8d89e5bb05da?auto=format&fit=crop&q=80&w=800",
     badge: null,
     description: "Lemari dapur gantung yang hemat ruang dengan finishing anti gores dan mudah dibersihkan. Cocok untuk menyimpan perlengkapan dapur agar selalu rapi.",
   },
@@ -454,15 +454,7 @@ function FeaturedProductsContent() {
           ))}
         </div>
 
-        {/* CTA */}
-        <div className="mt-12 text-center">
-          <Link
-            href="https://wa.me/6289692530975"
-            className="inline-flex items-center gap-2 rounded-lg bg-primary px-8 py-4 text-sm font-semibold text-primary-foreground transition-all hover:opacity-90"
-          >
-            Lihat Semua Produk via WhatsApp
-          </Link>
-        </div>
+
       </div>
 
       {/* Product Detail Modal */}
